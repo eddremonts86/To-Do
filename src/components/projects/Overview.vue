@@ -2,9 +2,16 @@
 import formsDialog from '@/components/globals/FormsDialog.vue'
 import { items } from '@/components/projects/const/form'
 import { createProject } from '@/services/projects'
+import { useProjectsStore } from '@/stores/projects'
+import type { Projects } from '@/types/globalTypes'
 import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const store = useProjectsStore()
+
 const props = defineProps<{
-  projects: { id: number; name: string; completion: number }[]
+  projects: Projects[]
 }>()
 
 const completionColor = (completion: number) => {
@@ -17,14 +24,20 @@ const completionColor = (completion: number) => {
   }
 }
 const dialog = ref(false)
-const dialogValue = reactive({})
+let dialogValue = reactive({})
 
 function updateData(data: any) {
-  dialogValue.value = data
+  dialogValue = data
 }
 
 async function saveProjects() {
-  await createProject(dialogValue.value)
+  if (Object.keys(dialogValue).length) {
+    await createProject(dialogValue)
+  }
+}
+const goToProject = (project: Projects) => {
+  store.updateProject(project)
+  router.push({ name: 'projects' })
 }
 </script>
 
@@ -41,7 +54,12 @@ async function saveProjects() {
       />
     </div>
 
-    <div v-for="project in props.projects" :key="project.id" class="cl-projects-items">
+    <div
+      v-for="project in props.projects"
+      :key="project.id"
+      class="cl-projects-items"
+      @click="goToProject(project)"
+    >
       <div>{{ project.name }}</div>
       <v-spacer />
 
@@ -50,10 +68,10 @@ async function saveProjects() {
         :rotate="360"
         :size="45"
         :width="5"
-        :color="completionColor(project.completion)"
+        :color="completionColor(project.completion || 0)"
       >
         <template v-slot:default>
-          <span class="cl-projects-items-completion">{{ project.completion }} %</span>
+          <span class="cl-projects-items-completion">{{ project.completion || 0 }} %</span>
         </template>
       </v-progress-circular>
     </div>

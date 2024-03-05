@@ -53,3 +53,13 @@ export const getTasksByProject = async (projectId: string) => {
     console.log(error)
   }
 }
+
+
+export const getTaskByDate = async (date: string) => {
+  try {
+    const { data } = await axios.get(`/tasks?date=${date}`)
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}

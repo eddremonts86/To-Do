@@ -1,24 +1,20 @@
-import { ref } from 'vue'
-import { defineStore } from 'pinia'
-import {
-  getProjects,
-  getProject,
-  createProject,
-  updateProject,
-  deleteProject
-} from '@/services/projects'
+import { getProject, getProjects } from '@/services/projects'
 import type { Projects } from '@/types/globalTypes'
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const useProjectsStore = defineStore('projects', {
   state: () => ({
     projects: ref(<Projects[]>[]),
-    projectsId: ref(<string[]>[])
+    project: ref(<Projects>{}),
+    taskDate: ref(<string>new Date().toLocaleDateString())
   }),
   actions: {
     async fetchProjects() {
       const data = await getProjects()
+      if (!data) return
       this.projects = data
-      this.projectsId = data.map((project: Projects) => project.id)
+      return
     },
 
     async fetchProject(id: string) {
@@ -26,21 +22,12 @@ export const useProjectsStore = defineStore('projects', {
       return data
     },
 
-    async createProject(project: Projects) {
-      const data = await createProject(project)
-      this.projects.push(data)
-      this.projectsId.push(data.id)
+    updateProject(project: Projects) {
+      this.project = project
     },
 
-    async updateProject(project: Projects) {
-      const { data } = await updateProject(project)
-      this.projects = data
-    },
-
-    async deleteProject(id: string) {
-      await deleteProject(id)
-      this.projects = this.projects.filter((p: Projects) => p.id !== id)
-      this.projectsId = this.projectsId.filter((p: string) => p !== id)
+    updateTaskDate(date: string) {
+      this.taskDate = date
     }
   }
 })

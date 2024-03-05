@@ -1,13 +1,10 @@
-<template>
-  <div>
-
-  </div>
-</template>
-
 <script lang="ts" setup>
-
+import ProjectsAndTasks from '@/components/tasks/TasksByProjects.vue'
 </script>
 
-<style>
-
-</style>
+<template>
+  <div>
+    <ProjectsAndTasks />
+  </div>
+</template>
+<style></style>

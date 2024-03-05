@@ -8,6 +8,7 @@ type BaseAction = {
 export type Projects = BaseAction & {
   startDate: string
   endDate: string
+  completion?: number
 }
 
 export type Tasks = BaseAction & {

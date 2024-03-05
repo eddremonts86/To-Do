@@ -2,8 +2,8 @@
 import { useProjectsStore } from '@/stores/projects'
 import type { Projects } from '@/types/globalTypes'
 import { onMounted, ref, watchEffect } from 'vue'
+import { useRouter } from 'vue-router'
 import projectsOverview from './components/projects/Overview.vue'
-
 const projects = ref<Array<Projects>>([])
 const store = useProjectsStore()
 
@@ -14,8 +14,15 @@ onMounted(
   })
 )
 const date = ref(new Date())
+const router = useRouter() // Get the router instance
+
 const setDate = () => {
-  console.log(date.value)
+  router.push({ name: 'tasks' })
+  store.updateTaskDate(date.value.toLocaleDateString())
+}
+const goToHome = () => {
+  store.updateProject({} as Projects)
+  router.push({ name: 'home' })
 }
 </script>
 
@@ -24,8 +31,8 @@ const setDate = () => {
     <v-main>
       <v-container>
         <v-row class="main-container">
-          <v-col cols="3" class="nav">
-            <v-sheet class="nav-container d-flex justify-start align-center">
+          <v-col cols="3" class="td-nav">
+            <v-sheet class="nav-container d-flex justify-start align-center" @click="goToHome">
               <v-avatar color="grey-darken-1" size="64" />
               <div class="pl-2">
                 <p>Eduardo Inerarte</p>
@@ -43,8 +50,7 @@ const setDate = () => {
             </div>
             <projectsOverview :projects="projects" class="nav-container" />
           </v-col>
-
-          <v-col cols="9" class="">
+          <v-col cols="8" class="td-main-content">
             <RouterView />
           </v-col>
         </v-row>
@@ -54,16 +60,21 @@ const setDate = () => {
 </template>
 
 <style lang="scss">
-.nav {
+.td-nav {
   max-width: 380px !important;
   background-color: rgb(231, 231, 224) !important;
   border-radius: 16px !important;
+  margin: 0;
+}
+.td-main-content {
+  margin: 0;
 }
 .nav-container {
   background-color: white !important;
   border-radius: 12px !important;
   padding: 16px;
   margin-bottom: 16px;
+  cursor: pointer;
 }
 .main-container {
   border-radius: 16px !important;

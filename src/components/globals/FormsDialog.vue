@@ -1,44 +1,37 @@
 <script lang="ts" setup>
 import forms from '@/components/globals/Forms.vue'
 import type { FormItem } from '@/types/globalTypes'
-import { computed, type PropType } from 'vue'
-const props = defineProps({
-  items: {
-    type: Array as PropType<FormItem[]>,
-    required: true
-  },
-  input: {
-    type: Boolean,
-    required: true
-  },
-  title: {
-    type: String,
-    default: 'Create a new project'
-  }
-})
+import { computed, reactive } from 'vue'
+const props = defineProps<{
+  items: FormItem[]
+  input: boolean
+  title: String
+}>()
 
 const emit = defineEmits(['submit', 'update-input', 'save'])
 
-const input = computed({
-  get: () => props.input,
+const dialog = computed({
+  get: () => props.input || false,
   set: (value) => {
     emit('update-input', value)
   }
 })
 
+let data = reactive({})
+
 const submit = (dataSubmit: any) => {
+  data = dataSubmit
   emit('submit', dataSubmit)
 }
 
 const save = () => {
-  emit('save')
-  input.value = false
+  emit('save', data)
+  dialog.value = false
 }
-
 </script>
 
 <template>
-  <v-dialog max-width="500" v-model="input">
+  <v-dialog max-width="500" v-model="dialog">
     <template v-slot:activator="{ props: activatorProps }">
       <v-btn icon flat v-bind="activatorProps">
         <v-icon>mdi-plus</v-icon>
@@ -82,5 +75,3 @@ const save = () => {
     </template>
   </v-dialog>
 </template>
-
-<style></style>
