@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import formsDialog from '@/components/globals/FormsDialog.vue'
 import { items } from '@/components/projects/const/form'
-import { createProject } from '@/services/projects'
+import { createProject } from '@/services/apiProjects'
 import { useProjectsStore } from '@/stores/projects'
 import type { Projects } from '@/types/globalTypes'
 import { reactive, ref } from 'vue'

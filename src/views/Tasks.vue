@@ -9,7 +9,6 @@ const store = useProjectsStore()
 const date = computed(() => store.taskDate)
 const tasks = ref([])
 
-
 const fetchTasks = async () => {
   const data = await getTaskByDate(date.value)
   tasks.value = data
@@ -23,7 +22,6 @@ onMounted(
 watch(date, async () => {
   await fetchTasks()
 })
-
 
 async function updateStatus(task: Tasks) {
   await updateTask(task)
@@ -47,3 +45,4 @@ async function updateStatus(task: Tasks) {
     </v-card-text>
   </v-card>
 </template>
+@/services/apiTasks

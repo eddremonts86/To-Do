@@ -48,3 +48,4 @@ async function updateStatus(task: Tasks) {
     </template>
   </div>
 </template>
+@/services/apiTasks

@@ -1,4 +1,4 @@
-import { getProject, getProjects } from '@/services/projects'
+import { getProject, getProjects } from '@/services/apiProjects'
 import type { Projects } from '@/types/globalTypes'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'

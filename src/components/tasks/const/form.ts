@@ -1,4 +1,4 @@
-import { getProjects } from '@/services/projects'
+import { getProjects } from '@/services/apiProjects'
 import type { FormItem, Projects } from '@/types/globalTypes'
 
 export const items = async (): Promise<FormItem[]> => {
