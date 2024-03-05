@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import Task from '@/components/tasks/Task.vue'
-import { getTasksByProject, updateTask } from '@/services/tasks'
+import { getTasksByProject, updateTask } from '@/services/apiTasks'
 import type { Tasks } from '@/types/globalTypes'
 import { computed, onMounted, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
@@ -31,7 +31,7 @@ async function fetchTasks() {
   if (projectRouter.value) {
     projectTasks.value = tasks
   } else {
-    projectTasks.value = tasks.slice(size.value)
+    projectTasks.value = tasks.length > size.value ? tasks.slice(size.value) : tasks
   }
 }
 

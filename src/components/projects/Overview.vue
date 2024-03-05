@@ -49,6 +49,7 @@ const goToProject = (project: Projects) => {
       <formsDialog
         :items="items"
         v-model="dialog"
+        title="Create new project"
         @submit="updateData($event)"
         @save="saveProjects()"
       />

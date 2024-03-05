@@ -1,5 +1,5 @@
+import { formatDate } from '@/libs/helpers'
 import { axios } from '@/services/axios'
-
 export const getTasks = async () => {
   try {
     const { data } = await axios.get('/tasks')
@@ -19,8 +19,11 @@ export const getTask = async (id: string) => {
 }
 
 export const createTask = async (task: any) => {
+  console.log('🚀 ~ createTask ~ task:', task)
   try {
-    const { data } = await axios.post('/tasks', task)
+    const taskFormatted = { ...task, date: formatDate(task.date) }
+    console.log('🚀 ~ createTask ~ taskFormatted:', taskFormatted)
+    const { data } = await axios.post('/tasks', taskFormatted)
     return data
   } catch (error) {
     console.log(error)
@@ -29,7 +32,8 @@ export const createTask = async (task: any) => {
 
 export const updateTask = async (task: any) => {
   try {
-    const { data } = await axios.put(`/tasks/${task.id}`, task)
+    const taskFormatted = { ...task, date: formatDate(task.date) }
+    const { data } = await axios.put(`/tasks/${task.id}`, taskFormatted)
     return data
   } catch (error) {
     console.log(error)
@@ -55,6 +59,7 @@ export const getTasksByProject = async (projectId: string) => {
 }
 
 export const getTaskByDate = async (date: string) => {
+  console.log('🚀 ~ getTaskByDate ~ date:', date)
   try {
     const { data } = await axios.get(`/tasks?date=${date}`)
     return data

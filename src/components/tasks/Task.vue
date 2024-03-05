@@ -1,6 +1,9 @@
 <script lang="ts" setup>
+import { sliceText } from '@/libs/helpers'
 import type { Tasks } from '@/types/globalTypes'
 import type { PropType } from 'vue'
+import { formatDateToLocal } from '@/libs/helpers'
+
 
 const props = defineProps({
   task: {
@@ -23,11 +26,10 @@ const status = () => {
       <div class="d-flex justify-center align-center">
         <span class="name">{{ props.task.name }}</span>
         <v-spacer />
-        <span class="date">{{ props.task.date }}</span>
+        <span class="date">{{ formatDateToLocal(props.task.date) }}</span>
       </div>
       <span class="description">
-        {{ props.task.description.slice(0, 150)
-        }}{{ props.task.description.length > 150 ? '...' : '' }}
+        {{ sliceText(props.task.description, 0, 150) }}
       </span>
     </div>
   </div>

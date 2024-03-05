@@ -1,6 +1,6 @@
+import { formatDate } from '@/libs/helpers'
 import { axios } from '@/services/axios'
 import type { Projects } from '@/types/globalTypes'
-
 
 export const getProjects = async () => {
   try {
@@ -22,7 +22,13 @@ export const getProject = async (id: string) => {
 
 export const createProject = async (project: Projects) => {
   try {
-    const { data } = await axios.post('/projects', project)
+    const projectFormatted = {
+      ...project,
+      startDate: formatDate(project.startDate),
+      endDate: formatDate(project.endDate)
+    }
+
+    const { data } = await axios.post('/projects', projectFormatted)
     return data
   } catch (error) {
     console.log(error)
@@ -31,7 +37,12 @@ export const createProject = async (project: Projects) => {
 
 export const updateProject = async (project: Projects) => {
   try {
-    const { data } = await axios.put(`/projects/${project.id}`, project)
+    const projectFormatted = {
+      ...project,
+      startDate: formatDate(project.startDate),
+      endDate: formatDate(project.endDate)
+    }
+    const { data } = await axios.put(`/projects/${project.id}`, projectFormatted)
     return data
   } catch (error) {
     console.log(error)

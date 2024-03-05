@@ -4,6 +4,7 @@ import type { Projects } from '@/types/globalTypes'
 import { onMounted, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import projectsOverview from './components/projects/Overview.vue'
+
 const projects = ref<Array<Projects>>([])
 const store = useProjectsStore()
 
@@ -33,7 +34,12 @@ const goToHome = () => {
         <v-row class="main-container">
           <v-col cols="3" class="td-nav">
             <v-sheet class="nav-container d-flex justify-start align-center" @click="goToHome">
-              <v-avatar color="grey-darken-1" size="64" />
+              <v-avatar color="white" size="86">
+                <v-img
+                  alt="John"
+                  src="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png"
+                ></v-img>
+              </v-avatar>
               <div class="pl-2">
                 <p>Eduardo Inerarte</p>
                 <p>eduardo.inerarte@gmail.com</p>

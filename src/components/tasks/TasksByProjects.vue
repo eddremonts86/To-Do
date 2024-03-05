@@ -2,11 +2,14 @@
 import formsDialog from '@/components/globals/FormsDialog.vue'
 import projectsTasks from '@/components/projects/Details.vue'
 import { items } from '@/components/tasks/const/form'
-import { createTask } from '@/services/tasks'
+import { createTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
 import type { FormItem, Projects, Tasks } from '@/types/globalTypes'
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { sliceText } from '@/libs/helpers'
+
+import { formatDateToLocal } from '@/libs/helpers'
 const router = useRouter()
 const store = useProjectsStore()
 const dialog = ref(false)
@@ -43,13 +46,21 @@ const saveTask = (data: Tasks) => {
       <v-card-title class="d-flex justify-center align-center">
         <h3>{{ project.name }}</h3>
         <v-spacer />
-        <formsDialog :items="formItems" v-model="dialog" @save="saveTask($event)" />
+        <formsDialog
+          :items="formItems"
+          title="Create new task"
+          v-model="dialog"
+          @save="saveTask($event)"
+        />
       </v-card-title>
       <v-divider />
       <v-card-subtitle class="pa-4">
-        <span class="text-bold">{{ project.startDate }} - {{ project.endDate }}</span>
+        <span class="text-bold"
+          >{{ formatDateToLocal(project.startDate) }} -
+          {{ formatDateToLocal(project.endDate) }}</span
+        >
         <p class="text-wrap">
-          {{ project.description.slice(0, 150) }}{{ project.description.length > 150 ? '...' : '' }}
+          {{ sliceText(project.description, 0, 150) }}
         </p>
       </v-card-subtitle>
       <v-divider />
@@ -61,7 +72,7 @@ const saveTask = (data: Tasks) => {
       </v-card-actions>
     </v-card>
   </div>
-  <div>
+  <div v-else>
     <v-alert
       text="No projects found, please create one"
       title="Create Project"
