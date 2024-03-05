@@ -38,6 +38,7 @@ const goToProject = (project: Projects) => {
 }
 const saveTask = (data: Tasks) => {
   createTask(data)
+  dialog.value = false
 }
 </script>
 <template>
@@ -49,7 +50,7 @@ const saveTask = (data: Tasks) => {
         <formsDialog
           :items="formItems"
           title="Create new task"
-          v-model="dialog"
+          :input="dialog"
           @save="saveTask($event)"
         />
       </v-card-title>
@@ -80,4 +81,4 @@ const saveTask = (data: Tasks) => {
     ></v-alert>
   </div>
 </template>
-@/services/apiTasks
+ 

@@ -2,11 +2,10 @@
 import formsDialog from '@/components/globals/FormsDialog.vue'
 import Task from '@/components/tasks/Task.vue'
 import { items } from '@/components/tasks/const/form'
-import { getTaskByDate, updateTask } from '@/services/apiTasks'
+import { createTask, getTaskByDate, updateTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
 import type { FormItem, Tasks } from '@/types/globalTypes'
 import { computed, onMounted, ref, watch, watchEffect } from 'vue'
-import { createTask } from '@/services/apiTasks'
 
 const store = useProjectsStore()
 const date = computed(() => store.taskDate)
@@ -36,17 +35,18 @@ async function updateStatus(task: Tasks) {
 }
 const saveTask = (data: Tasks) => {
   createTask(data)
+  dialog.value = false
 }
 </script>
 <template>
-  <v-card rounded="lg" class="mx-auto">
+  <v-card rounded="lg" class="mx-auto" elevation="0">
     <v-card-title class="d-flex justify-center align-center">
       <h3>Tasks</h3>
       <v-spacer></v-spacer>
       <formsDialog
         :items="formItems"
         title="Create new task"
-        v-model="dialog"
+        :input="dialog"
         @save="saveTask($event)"
       />
     </v-card-title>
@@ -60,4 +60,4 @@ const saveTask = (data: Tasks) => {
     </v-card-text>
   </v-card>
 </template>
-@/services/apiTasks
+ 

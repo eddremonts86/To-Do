@@ -26,7 +26,6 @@ const submit = (dataSubmit: any) => {
 
 const save = () => {
   emit('save', data)
-  dialog.value = false
 }
 </script>
 

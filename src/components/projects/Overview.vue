@@ -24,15 +24,16 @@ const completionColor = (completion: number) => {
   }
 }
 const dialog = ref(false)
-let dialogValue = reactive({})
+let dialogValues = reactive({})
 
 function updateData(data: any) {
-  dialogValue = data
+  dialogValues = data
 }
 
 async function saveProjects() {
-  if (Object.keys(dialogValue).length) {
-    await createProject(dialogValue)
+  if (Object.keys(dialogValues).length) {
+    await createProject(dialogValues)
+    dialog.value = false
   }
 }
 const goToProject = (project: Projects) => {
@@ -48,7 +49,7 @@ const goToProject = (project: Projects) => {
       <v-spacer />
       <formsDialog
         :items="items"
-        v-model="dialog"
+        :input="dialog"
         title="Create new project"
         @submit="updateData($event)"
         @save="saveProjects()"
