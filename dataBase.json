@@ -1,28 +1,4 @@
 {
-  "projects": [
-    {
-      "description": "It is a small test, using Vue3 and Vuetify3",
-      "endDate": "03/04/2024",
-      "id": "4fe7",
-      "name": "Create ToDo app",
-      "startDate": "03/06/2024"
-    }
-  ],
-  "tasks": [
-    {
-      "id": "f8cf",
-      "projectId": "4fe7",
-      "name": "ONE",
-      "description": "KDMLSDK",
-      "date": "03/05/2024",
-      "status": true
-    },
-    {
-      "id": "b066",
-      "name": "Two",
-      "projectId": "4fe7",
-      "date": "03/07/2024",
-      "status": true
-    }
-  ]
+  "projects": [],
+  "tasks": []
 }

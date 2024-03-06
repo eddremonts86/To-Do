@@ -1,34 +1,41 @@
 <script lang="ts" setup>
 import formsDialog from '@/components/globals/FormsDialog.vue'
 import { items } from '@/components/projects/const/form'
-import { createProject } from '@/services/apiProjects'
+import { createProject, deleteProject } from '@/services/apiProjects'
 import { useProjectsStore } from '@/stores/projects'
 import type { Projects } from '@/types/globalTypes'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import completeStatus from './CompleteStatus.vue'
 
+let dialogValues = reactive({} as Projects)
 const router = useRouter()
 const store = useProjectsStore()
 const dialog = ref(false)
-let dialogValues = reactive({})
+const emits = defineEmits(['reloadProjects'])
 const props = defineProps<{
   projects: Projects[]
 }>()
 
-function updateData(data: any) {
+const updateData = (data: any) => {
   dialogValues = data
 }
 
-async function saveProjects() {
+const saveProjects = async () => {
   if (Object.keys(dialogValues).length) {
     await createProject(dialogValues)
     dialog.value = false
   }
 }
+
 const goToProject = (project: Projects) => {
   store.updateProject(project)
   router.push({ name: 'projects' })
+}
+
+const deleteProjectById = (id: string) => {
+  deleteProject(id)
+  emits('reloadProjects')
 }
 </script>
 
@@ -51,9 +58,12 @@ const goToProject = (project: Projects) => {
       class="cl-projects-items"
       @click="goToProject(project)"
     >
+      <completeStatus :projectId="project.id" size="45" />
       <div>{{ project.name }}</div>
       <v-spacer />
-      <completeStatus :projectId="project.id" />
+      <v-btn icon flat size="small" variant="text" @click="deleteProjectById(project.id)">
+        <v-icon>mdi-delete-variant</v-icon>
+      </v-btn>
     </div>
   </div>
 </template>

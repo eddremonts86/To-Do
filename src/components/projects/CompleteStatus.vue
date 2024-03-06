@@ -5,6 +5,7 @@ import { onMounted, ref } from 'vue'
 
 const props = defineProps<{
   projectId: string
+  size: string,
 }>()
 
 const completion = ref(0)
@@ -14,7 +15,7 @@ onMounted(async () => {
   loading.value = true
   const tasks: Tasks[] = await getTasksByProject(props.projectId)
   const completedTasks = tasks.filter((task) => task.status)
-  completion.value = Math.round((completedTasks.length / tasks.length) * 100)
+  completion.value = Math.round((completedTasks.length / tasks.length) * 100) || 0
   loading.value = false
 })
 
@@ -34,7 +35,7 @@ const completionColor = (completion: number) => {
     :indeterminate="loading"
     :model-value="completion"
     :rotate="360"
-    :size="45"
+    :size="props.size || 45"
     :width="5"
     :color="completionColor(completion)"
   >

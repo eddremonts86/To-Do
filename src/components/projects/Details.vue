@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import Task from '@/components/tasks/Task.vue'
-import { getTasksByProject, updateTask } from '@/services/apiTasks'
+import { getTasksByProject, updateTask, deleteTask } from '@/services/apiTasks'
 import type { Tasks } from '@/types/globalTypes'
 import { computed, onMounted, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
@@ -39,12 +39,16 @@ async function updateStatus(task: Tasks) {
   await updateTask(task)
   await fetchTasks()
 }
+async function deleteTaskById(id: string) {
+  await deleteTask(id)
+  await fetchTasks()
+}
 </script>
 
 <template>
   <div>
     <template v-for="task in projectTasks" :key="task.id">
-      <Task :task="task" @updateTask="updateStatus($event)" />
+      <Task :task="task" @updateTask="updateStatus($event)" @deleteTask="deleteTaskById($event)" />
     </template>
   </div>
 </template>

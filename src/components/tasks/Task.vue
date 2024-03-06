@@ -9,7 +9,7 @@ const props = defineProps({
     required: true
   }
 })
-const emits = defineEmits(['updateTask'])
+const emits = defineEmits(['updateTask', 'deleteTask'])
 const status = () => {
   emits('updateTask', { ...props.task, status: !props.task.status })
 }
@@ -27,6 +27,11 @@ const completeStatus = computed(() => {
     icon: 'mdi-checkbox-blank-circle-outline'
   }
 })
+
+const deleteTask = (event: Event, id: string) => {
+  event.stopImmediatePropagation()
+  emits('deleteTask', id)
+}
 </script>
 
 <template>
@@ -39,6 +44,9 @@ const completeStatus = computed(() => {
         <span class="name">{{ props.task.name }}</span>
         <v-spacer />
         <span class="date">{{ formatDateToLocal(props.task.date) }}</span>
+        <v-btn icon flat size="small" variant="text" @click="deleteTask($event, props.task.id)">
+          <v-icon>mdi-delete-variant</v-icon></v-btn
+        >
       </div>
       <span class="description">
         {{ sliceText(props.task.description, 0, 150) }}

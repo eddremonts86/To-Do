@@ -2,12 +2,13 @@
 import formsDialog from '@/components/globals/FormsDialog.vue'
 import projectsTasks from '@/components/projects/Details.vue'
 import { items } from '@/components/tasks/const/form'
+import { sliceText } from '@/libs/helpers'
+import { deleteProject } from '@/services/apiProjects'
 import { createTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
 import type { FormItem, Projects, Tasks } from '@/types/globalTypes'
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { sliceText } from '@/libs/helpers'
 
 import { formatDateToLocal } from '@/libs/helpers'
 const router = useRouter()
@@ -40,6 +41,10 @@ const saveTask = (data: Tasks) => {
   createTask(data)
   dialog.value = false
 }
+const deleteProjectById = (id: string) => {
+  deleteProject(id)
+  router.push({ name: 'home' })
+}
 </script>
 <template>
   <div v-if="projects.length">
@@ -53,6 +58,16 @@ const saveTask = (data: Tasks) => {
           :input="dialog"
           @save="saveTask($event)"
         />
+        <v-btn
+          icon
+          flat
+          size="md"
+          variant="text"
+          @click="deleteProjectById(project.id)"
+          class="ml-4"
+        >
+          <v-icon>mdi-delete-variant</v-icon>
+        </v-btn>
       </v-card-title>
       <v-divider />
       <v-card-subtitle class="pa-4">
@@ -75,10 +90,10 @@ const saveTask = (data: Tasks) => {
   </div>
   <div v-else>
     <v-alert
+      class="rounded-xl"
       text="No projects found, please create one"
       title="Create Project"
       type="info"
     ></v-alert>
   </div>
 </template>
- 

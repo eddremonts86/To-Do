@@ -7,20 +7,25 @@ import projectsOverview from './components/projects/Overview.vue'
 
 const projects = ref<Array<Projects>>([])
 const store = useProjectsStore()
+const date = ref(new Date())
+const router = useRouter()
+
+const loadProjects = async () => {
+  await store.fetchProjects()
+  projects.value = store.projects
+}
 
 onMounted(
   watchEffect(async () => {
-    await store.fetchProjects()
-    projects.value = store.projects
+    await loadProjects()
   })
 )
-const date = ref(new Date())
-const router = useRouter() // Get the router instance
 
 const setDate = () => {
   router.push({ name: 'tasks' })
   store.updateTaskDate(date.value.toLocaleDateString())
 }
+
 const goToHome = () => {
   store.updateProject({} as Projects)
   router.push({ name: 'home' })
@@ -54,7 +59,11 @@ const goToHome = () => {
                 @update:model-value="setDate()"
               />
             </div>
-            <projectsOverview :projects="projects" class="nav-container" />
+            <projectsOverview
+              :projects="projects"
+              class="nav-container"
+              @reloadProjects="loadProjects()"
+            />
           </v-col>
           <v-col cols="8" class="td-main-content">
             <RouterView />
