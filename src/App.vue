@@ -3,8 +3,10 @@ import { useProjectsStore } from '@/stores/projects'
 import type { Projects } from '@/types/globalTypes'
 import { onMounted, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
+import { useDisplay } from 'vuetify'
 import projectsOverview from './components/projects/Overview.vue'
 
+const display = ref(useDisplay())
 const projects = ref<Array<Projects>>([])
 const store = useProjectsStore()
 const date = ref(new Date())
@@ -36,8 +38,8 @@ const goToHome = () => {
   <v-app id="inspire">
     <v-main>
       <v-container>
-        <v-row class="main-container">
-          <v-col cols="3" class="td-nav">
+        <v-row class="main-container" no-gutters>
+          <v-col xs="12" sm="12" md="4" lg="4" class="td-nav">
             <v-sheet class="nav-container d-flex justify-start align-center" @click="goToHome">
               <v-avatar color="white" size="86">
                 <v-img
@@ -52,12 +54,22 @@ const goToHome = () => {
             </v-sheet>
             <div class="nav-container">
               <v-date-picker
+                v-if="display.smAndUp"
+                hide-header
                 elevation="0"
                 title="Chose a day"
                 v-model="date"
                 show-adjacent-months
                 @update:model-value="setDate()"
               />
+              <v-text-field
+                type="date"
+                @change="setDate()"
+                label="Chose a day"
+                v-model="date"
+                v-else
+                hide-details
+              ></v-text-field>
             </div>
             <projectsOverview
               :projects="projects"
@@ -65,7 +77,7 @@ const goToHome = () => {
               @reloadProjects="loadProjects()"
             />
           </v-col>
-          <v-col cols="8" class="td-main-content">
+          <v-col xs="12" sm="12" md="8" lg="8" class="td-main-content">
             <RouterView />
           </v-col>
         </v-row>
@@ -77,12 +89,18 @@ const goToHome = () => {
 <style lang="scss">
 .td-nav {
   max-width: 380px !important;
-  background-color: rgb(231, 231, 224) !important;
   border-radius: 16px !important;
   margin: 0;
+   @media only screen and (max-width: 600px) {
+    max-width: 100% !important;
+  }
 }
 .td-main-content {
   margin: 0;
+  padding: 0 16px !important;
+  @media only screen and (max-width: 600px) {
+    padding: 0 !important;
+  }
 }
 .nav-container {
   background-color: white !important;

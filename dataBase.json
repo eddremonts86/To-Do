@@ -1,4 +1,29 @@
 {
-  "projects": [],
+  "projects": [
+    {
+      "description": "Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet.",
+      "endDate": "12/4/2024",
+      "id": "8580ac46-7031-411f-b4ce-8798",
+      "name": "Project #2",
+      "startDate": "6/27/2024",
+      "status": false
+    },
+    {
+      "description": "In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.",
+      "endDate": "5/10/2024",
+      "id": "095c1bff-974f-4d2d-b16f-wew",
+      "name": "Project #1",
+      "startDate": "9/4/2024",
+      "status": false
+    },
+    {
+      "description": "Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet.",
+      "endDate": "12/4/2024",
+      "id": "8580ac46-7031-411f-b4ce-4f5022w46a946e4",
+      "name": "Project #3",
+      "startDate": "6/27/2024",
+      "status": false
+    }
+  ],
   "tasks": []
 }
