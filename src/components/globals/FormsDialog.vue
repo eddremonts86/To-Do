@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import forms from '@/components/globals/Forms.vue'
+import AppForms from '@/components/globals/AppForms.vue'
 import type { FormItem } from '@/types/globalTypes'
 import { computed, reactive } from 'vue'
 const props = defineProps<{
@@ -48,7 +48,7 @@ const save = () => {
         </v-card-title>
         <v-divider />
         <v-card-text>
-          <forms :items="props.items" @submit="submit($event)" />
+          <AppForms :items="props.items" @submit="submit($event)" />
         </v-card-text>
         <v-divider />
         <v-card-actions>

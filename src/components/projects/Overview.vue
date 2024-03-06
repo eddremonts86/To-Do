@@ -33,8 +33,8 @@ const goToProject = (project: Projects) => {
   router.push({ name: 'projects' })
 }
 
-const deleteProjectById = (id: string) => {
-  deleteProject(id)
+const deleteProjectById = async (id: string) => {
+  await deleteProject(id)
   emits('reloadProjects')
 }
 </script>

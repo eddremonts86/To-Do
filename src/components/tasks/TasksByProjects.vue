@@ -41,8 +41,9 @@ const saveTask = (data: Tasks) => {
   createTask(data)
   dialog.value = false
 }
-const deleteProjectById = (id: string) => {
-  deleteProject(id)
+const deleteProjectById = async (id: string) => {
+  await deleteProject(id)
+  await store.fetchProjects()
   router.push({ name: 'home' })
 }
 </script>

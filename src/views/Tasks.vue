@@ -60,4 +60,3 @@ const saveTask = (data: Tasks) => {
     </v-card-text>
   </v-card>
 </template>
- 

@@ -5,7 +5,7 @@ import { onMounted, ref } from 'vue'
 
 const props = defineProps<{
   projectId: string
-  size: string,
+  size: string
 }>()
 
 const completion = ref(0)

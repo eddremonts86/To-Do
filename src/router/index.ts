@@ -3,7 +3,6 @@ import TasksByProjects from '@/components/tasks/TasksByProjects.vue'
 import Tasks from '@/views/Tasks.vue'
 import Projects from '@/views/Projects.vue'
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

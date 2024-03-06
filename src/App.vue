@@ -1,11 +1,11 @@
 <script lang="ts" setup>
+import userInfo from '@/components/globals/UserInfo.vue'
+import projectsOverview from '@/components/projects/Overview.vue'
 import { useProjectsStore } from '@/stores/projects'
 import type { Projects } from '@/types/globalTypes'
 import { onMounted, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify'
-import projectsOverview from './components/projects/Overview.vue'
-
 const display = ref(useDisplay())
 const projects = ref<Array<Projects>>([])
 const store = useProjectsStore()
@@ -27,11 +27,6 @@ const setDate = () => {
   router.push({ name: 'tasks' })
   store.updateTaskDate(date.value.toLocaleDateString())
 }
-
-const goToHome = () => {
-  store.updateProject({} as Projects)
-  router.push({ name: 'home' })
-}
 </script>
 
 <template>
@@ -40,19 +35,8 @@ const goToHome = () => {
       <v-container>
         <v-row class="main-container" no-gutters>
           <v-col xs="12" sm="12" md="4" lg="4" class="td-nav">
-            <v-sheet class="nav-container d-flex justify-start align-center" @click="goToHome">
-              <v-avatar color="white" size="86">
-                <v-img
-                  alt="John"
-                  src="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png"
-                ></v-img>
-              </v-avatar>
-              <div class="pl-2">
-                <p>Eduardo Inerarte</p>
-                <p>eduardo.inerarte@gmail.com</p>
-              </div>
-            </v-sheet>
             <div class="nav-container">
+              <userInfo />
               <v-date-picker
                 v-if="display.smAndUp"
                 hide-header
@@ -91,7 +75,7 @@ const goToHome = () => {
   max-width: 380px !important;
   border-radius: 16px !important;
   margin: 0;
-   @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 600px) {
     max-width: 100% !important;
   }
 }
