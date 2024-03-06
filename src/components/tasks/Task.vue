@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import { sliceText } from '@/libs/helpers'
+import { formatDateToLocal, sliceText } from '@/libs/helpers'
 import type { Tasks } from '@/types/globalTypes'
-import type { PropType } from 'vue'
-import { formatDateToLocal } from '@/libs/helpers'
-
+import { computed, type PropType } from 'vue'
 
 const props = defineProps({
   task: {
@@ -15,12 +13,26 @@ const emits = defineEmits(['updateTask'])
 const status = () => {
   emits('updateTask', { ...props.task, status: !props.task.status })
 }
+
+const completeStatus = computed(() => {
+  const status = props.task.status
+  if (status) {
+    return {
+      color: 'green darken-4',
+      icon: 'mdi-checkbox-marked-circle-outline'
+    }
+  }
+  return {
+    color: 'grey darken-4',
+    icon: 'mdi-checkbox-blank-circle-outline'
+  }
+})
 </script>
 
 <template>
   <div @click="status()" :class="{ 'task-item': true, 'active-item': props.task.status }">
     <div class="pr-4">
-      <v-checkbox :value="props.task.status" hide-details color="primary" />
+      <v-icon :color="completeStatus.color">{{ completeStatus.icon }}</v-icon>
     </div>
     <div class="task-info">
       <div class="d-flex justify-center align-center">

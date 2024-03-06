@@ -6,25 +6,15 @@ import { useProjectsStore } from '@/stores/projects'
 import type { Projects } from '@/types/globalTypes'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import completeStatus from './CompleteStatus.vue'
 
 const router = useRouter()
 const store = useProjectsStore()
-
+const dialog = ref(false)
+let dialogValues = reactive({})
 const props = defineProps<{
   projects: Projects[]
 }>()
-
-const completionColor = (completion: number) => {
-  if (completion < 50) {
-    return 'red'
-  } else if (completion < 80) {
-    return 'orange'
-  } else {
-    return 'green'
-  }
-}
-const dialog = ref(false)
-let dialogValues = reactive({})
 
 function updateData(data: any) {
   dialogValues = data
@@ -55,7 +45,6 @@ const goToProject = (project: Projects) => {
         @save="saveProjects()"
       />
     </div>
-
     <div
       v-for="project in props.projects"
       :key="project.id"
@@ -64,18 +53,7 @@ const goToProject = (project: Projects) => {
     >
       <div>{{ project.name }}</div>
       <v-spacer />
-
-      <v-progress-circular
-        :model-value="project.completion"
-        :rotate="360"
-        :size="45"
-        :width="5"
-        :color="completionColor(project.completion || 0)"
-      >
-        <template v-slot:default>
-          <span class="cl-projects-items-completion">{{ project.completion || 0 }} %</span>
-        </template>
-      </v-progress-circular>
+      <completeStatus :projectId="project.id" />
     </div>
   </div>
 </template>
