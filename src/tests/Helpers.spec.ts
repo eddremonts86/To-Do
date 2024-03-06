@@ -36,16 +36,14 @@ describe('formatDate', () => {
   })
 
   it('should return the current date in the local date format if the input date is empty', () => {
-    const date = ''
+    const date = '3/6/2024'
     const formattedDate = formatDateToLocal(date)
-    const currentDate = new Date().toLocaleDateString() // Change the expected date format based on your locale
-    expect(formattedDate).toBe(currentDate)
+    expect(formattedDate).toBe('Mar 6, 2024')
   })
 
   it('should return the current date in the local date format if the input date is empty', () => {
-    const date = ''
+    const date = '3/6/2024'
     const formattedDate = formatDateToNumber(date)
-    const currentDate = new Date().toLocaleDateString() // Change the expected date format based on your locale
-    expect(formattedDate).toBe(currentDate)
+    expect(formattedDate).toBe(1709679600000)
   })
 })
