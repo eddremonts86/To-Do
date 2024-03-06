@@ -1,13 +1,23 @@
 <script lang="ts" setup>
 import type { FormItem } from '@/types/globalTypes'
 import type { PropType } from 'vue'
-import { reactive, watch } from 'vue'
+import { onMounted, reactive, watch } from 'vue'
 const dataSubmit: any = reactive({})
 const props = defineProps({
   items: {
     type: Array as PropType<FormItem[]>,
     required: true
+  },
+  values: {
+    type: Object,
+    required: true
   }
+})
+
+onMounted(() => {
+  props.items.map((ele) => {
+    dataSubmit[ele.name] = props.values[ele.name] || ''
+  })
 })
 
 const emit = defineEmits(['submit'])

@@ -2,7 +2,7 @@
 import formsDialog from '@/components/globals/FormsDialog.vue'
 import projectsTasks from '@/components/projects/Details.vue'
 import { items } from '@/components/tasks/const/form'
-import { sliceText } from '@/libs/helpers'
+import { sliceText, uniqueId } from '@/libs/helpers'
 import { deleteProject } from '@/services/apiProjects'
 import { createTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
@@ -15,7 +15,7 @@ const router = useRouter()
 const store = useProjectsStore()
 const dialog = ref(false)
 const formItems = ref<Array<FormItem>>([])
-
+const updateId = ref(uniqueId('task_'))
 onMounted(async () => {
   const data = await items()
   formItems.value = data
@@ -37,11 +37,13 @@ const goToProject = (project: Projects) => {
   store.updateProject(project)
   router.push({ name: 'projects' })
 }
-const saveTask = (data: Tasks) => {
-  createTask(data)
+const saveTask = async (data: Tasks) => {
+  await createTask(data)
+  updateId.value = uniqueId('task_')
   dialog.value = false
 }
 const deleteProjectById = async (id: string) => {
+  store.updateProject({} as Projects)
   await deleteProject(id)
   await store.fetchProjects()
   router.push({ name: 'home' })
@@ -51,13 +53,17 @@ const deleteProjectById = async (id: string) => {
   <div v-if="projects.length">
     <v-card class="mb-4" rounded="lg" elevation="0" v-for="project in projects" :key="project.id">
       <v-card-title class="d-flex justify-center align-center">
-        <h3>{{ project.name }}</h3>
+        <h3 class="projects-name">{{ project.name }}</h3>
         <v-spacer />
         <formsDialog
           :items="formItems"
           title="Create new task"
           :input="dialog"
+          :values="{
+            projectId: project.id
+          }"
           @save="saveTask($event)"
+          @update-input="dialog = $event"
         />
         <v-btn
           icon
@@ -82,7 +88,7 @@ const deleteProjectById = async (id: string) => {
       </v-card-subtitle>
       <v-divider />
       <v-card-text class="pa-4">
-        <projectsTasks :projectId="project.id" />
+        <projectsTasks :projectId="project.id" :key="updateId" />
       </v-card-text>
       <v-card-actions class="d-flex justify-center align-center" v-if="!projectRouter">
         <v-btn @click="goToProject(project)">Go to project</v-btn>

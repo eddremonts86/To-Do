@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import Task from '@/components/tasks/Task.vue'
 import { getTasksByProject, updateTask, deleteTask } from '@/services/apiTasks'
@@ -39,6 +40,7 @@ async function updateStatus(task: Tasks) {
   await updateTask(task)
   await fetchTasks()
 }
+
 async function deleteTaskById(id: string) {
   await deleteTask(id)
   await fetchTasks()
@@ -52,4 +54,3 @@ async function deleteTaskById(id: string) {
     </template>
   </div>
 </template>
-@/services/apiTasks

@@ -12,21 +12,25 @@ const completion = ref(0)
 const loading = ref(false)
 
 onMounted(async () => {
+  await getTasksData()
+})
+
+const getTasksData = async () => {
   loading.value = true
   const tasks: Tasks[] = await getTasksByProject(props.projectId)
   const completedTasks = tasks.filter((task) => task.status)
   completion.value = Math.round((completedTasks.length / tasks.length) * 100) || 0
   loading.value = false
-})
+}
 
 const completionColor = (completion: number) => {
   if (completion < 50) {
-    return 'red-darken-4'
+    return 'blue-darken-1'
   }
   if (completion < 80) {
-    return 'orange-darken-4'
+    return 'blue-darken-2'
   }
-  return 'green-darken-4'
+  return 'blue-darken-3'
 }
 </script>
 
@@ -35,13 +39,32 @@ const completionColor = (completion: number) => {
     :indeterminate="loading"
     :model-value="completion"
     :rotate="360"
-    :size="props.size || 45"
+    :size="props.size || 40"
     :width="5"
     :color="completionColor(completion)"
+    bg-color="#5199e5"
   >
     <template v-slot:default>
-      <span v-if="loading">...</span>
-      <span class="cl-projects-items-completion" v-else>{{ completion }} %</span>
+      <span class="cl-projects-items-completion" v-if="loading">...</span>
+      <span class="cl-projects-items-completion" v-else>{{ completion }}%</span>
     </template>
   </v-progress-circular>
 </template>
+
+<style lang="scss" scoped>
+.cl-projects-items-completion {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  font-weight: 600;
+  color: #161616ba;
+  border-radius: 12px;
+  font-weight: 900;
+}
+</style>

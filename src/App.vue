@@ -26,6 +26,7 @@ onMounted(
 const setDate = () => {
   router.push({ name: 'tasks' })
   store.updateTaskDate(date.value.toLocaleDateString())
+  store.updateProject({} as Projects)
 }
 </script>
 
@@ -34,9 +35,10 @@ const setDate = () => {
     <v-main>
       <v-container>
         <v-row class="main-container" no-gutters>
-          <v-col xs="12" sm="12" md="4" lg="4" class="td-nav">
+          <v-col xs="12" sm="12" md="4" lg="3" class="td-nav">
             <div class="nav-container">
               <userInfo />
+              <v-divider />
               <v-date-picker
                 v-if="display.smAndUp"
                 hide-header
@@ -45,6 +47,7 @@ const setDate = () => {
                 v-model="date"
                 show-adjacent-months
                 @update:model-value="setDate()"
+                class="pa-0"
               />
               <v-text-field
                 type="date"
@@ -57,11 +60,12 @@ const setDate = () => {
             </div>
             <projectsOverview
               :projects="projects"
+              :key="projects.length"
               class="nav-container"
               @reloadProjects="loadProjects()"
             />
           </v-col>
-          <v-col xs="12" sm="12" md="8" lg="8" class="td-main-content">
+          <v-col xs="12" sm="12" md="8" lg="9" class="td-main-content">
             <RouterView />
           </v-col>
         </v-row>
@@ -95,7 +99,10 @@ const setDate = () => {
 }
 .main-container {
   border-radius: 16px !important;
-  background-color: rgb(231, 231, 224) !important;
+  background-color: rgb(81 153 229 / 8%) !important;
   padding: 16px !important;
+}
+.v-date-picker-month {
+  padding: 0 !important;
 }
 </style>

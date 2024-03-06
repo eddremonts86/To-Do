@@ -1,7 +1,10 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import { formatDateToLocal, sliceText } from '@/libs/helpers'
 import type { Tasks } from '@/types/globalTypes'
 import { computed, type PropType } from 'vue'
+import { deleteTask } from '@/services/apiTasks'
+import { useProjectsStore } from '@/stores/projects'
 
 const props = defineProps({
   task: {
@@ -9,9 +12,11 @@ const props = defineProps({
     required: true
   }
 })
-const emits = defineEmits(['updateTask', 'deleteTask'])
+const emits = defineEmits(['updateTask'])
+const store = useProjectsStore()
 const status = () => {
   emits('updateTask', { ...props.task, status: !props.task.status })
+  store.updateProjectId(props.task.projectId)
 }
 
 const completeStatus = computed(() => {
@@ -28,9 +33,10 @@ const completeStatus = computed(() => {
   }
 })
 
-const deleteTask = (event: Event, id: string) => {
-  event.stopImmediatePropagation()
-  emits('deleteTask', id)
+const deleteTaskByID = async (event: Event, id: string) => {
+  event.stopPropagation()
+  await deleteTask(id)
+  status()
 }
 </script>
 
@@ -44,7 +50,7 @@ const deleteTask = (event: Event, id: string) => {
         <span class="name">{{ props.task.name }}</span>
         <v-spacer />
         <span class="date">{{ formatDateToLocal(props.task.date) }}</span>
-        <v-btn icon flat size="small" variant="text" @click="deleteTask($event, props.task.id)">
+        <v-btn icon flat size="small" variant="text" @click="deleteTaskByID($event, props.task.id)">
           <v-icon>mdi-delete-variant</v-icon></v-btn
         >
       </div>
@@ -57,7 +63,7 @@ const deleteTask = (event: Event, id: string) => {
 
 <style lang="scss">
 .task-item {
-  background-color: rgb(231, 231, 224);
+  background-color: rgb(233 233 231 / 43%);
   padding: 15px;
   margin: 8px 0;
   border-radius: 12px;
@@ -67,7 +73,7 @@ const deleteTask = (event: Event, id: string) => {
   align-items: center;
   min-width: 100%;
   &:hover {
-    background-color: rgb(204, 204, 185);
+    background-color: rgb(194 216 237 / 33%);
   }
   .task-info {
     width: 100%;
@@ -91,7 +97,7 @@ const deleteTask = (event: Event, id: string) => {
   }
 }
 .active-item {
-  background-color: rgb(204, 204, 185) !important;
+  background-color: rgb(194 216 237 / 33%) !important;
   .task-info {
     .name,
     .description {

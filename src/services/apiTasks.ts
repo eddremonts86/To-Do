@@ -19,7 +19,6 @@ export const getTask = async (id: string) => {
 }
 
 export const createTask = async (task: any) => {
-  console.log('🚀 ~ createTask ~ task:', task)
   try {
     const taskFormatted = { ...task, date: formatDate(task.date) }
     console.log('🚀 ~ createTask ~ taskFormatted:', taskFormatted)
@@ -48,6 +47,18 @@ export const deleteTask = async (id: string) => {
     console.log(error)
   }
 }
+export const deleteTaskByProjectId = async (id: string) => {
+  try {
+    const tasks = await getTasksByProject(id)
+    if (!tasks) return
+    const ids = tasks.map((task: any) => task.id)
+    const deletePromises = ids.map((id: string) => axios.delete(`/tasks/${id}`))
+    await Promise.all(deletePromises)
+    return
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const getTasksByProject = async (projectId: string) => {
   try {
@@ -59,7 +70,6 @@ export const getTasksByProject = async (projectId: string) => {
 }
 
 export const getTaskByDate = async (date: string) => {
-  console.log('🚀 ~ getTaskByDate ~ date:', date)
   try {
     const { data } = await axios.get(`/tasks?date=${date}`)
     return data

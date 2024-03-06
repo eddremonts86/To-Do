@@ -2,6 +2,7 @@ import { getProject, getProjects } from '@/services/apiProjects'
 import type { Projects } from '@/types/globalTypes'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { uniqueId } from '@/libs/helpers'
 
 export const useProjectsStore = defineStore('projects', {
   state: () => ({
@@ -28,6 +29,15 @@ export const useProjectsStore = defineStore('projects', {
 
     updateTaskDate(date: string) {
       this.taskDate = date
+    },
+
+    updateProjectId(id: string) {
+      this.projects = this.projects.map((project) => {
+        if (project.id === id) {
+          project.updateId = uniqueId('project_')
+        }
+        return project
+      })
     }
   }
 })

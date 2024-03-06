@@ -6,6 +6,7 @@ const props = defineProps<{
   items: FormItem[]
   input: boolean
   title: String
+  values: Object
 }>()
 
 const emit = defineEmits(['submit', 'update-input', 'save'])
@@ -48,7 +49,7 @@ const save = () => {
         </v-card-title>
         <v-divider />
         <v-card-text>
-          <AppForms :items="props.items" @submit="submit($event)" />
+          <AppForms :items="props.items" :values="props.values" @submit="submit($event)" />
         </v-card-text>
         <v-divider />
         <v-card-actions>

@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="nav-container d-flex justify-start align-center" @click="goToHome">
+  <v-sheet class="d-flex justify-start align-center px-0 pb-4" @click="goToHome">
     <v-avatar color="white" size="86">
       <v-img :alt="props.name" :src="props.img"></v-img>
     </v-avatar>
@@ -13,8 +13,8 @@
 <script lang="ts" setup>
 import { useProjectsStore } from '@/stores/projects'
 import type { Projects } from '@/types/globalTypes'
-import { useRouter } from 'vue-router'
 import { withDefaults } from 'vue'
+import { useRouter } from 'vue-router'
 const store = useProjectsStore()
 const router = useRouter()
 
@@ -35,5 +35,3 @@ const goToHome = () => {
   router.push({ name: 'home' })
 }
 </script>
-
-<style></style>

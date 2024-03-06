@@ -9,6 +9,7 @@ export type Projects = BaseAction & {
   startDate: string
   endDate: string
   completion?: number
+  updateId?: string
 }
 
 export type Tasks = BaseAction & {

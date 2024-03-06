@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import formsDialog from '@/components/globals/FormsDialog.vue'
 import Task from '@/components/tasks/Task.vue'
@@ -33,8 +34,9 @@ async function updateStatus(task: Tasks) {
   await updateTask(task)
   await fetchTasks()
 }
-const saveTask = (data: Tasks) => {
-  createTask(data)
+const saveTask = async (data: Tasks) => {
+  await createTask(data)
+  await fetchTasks()
   dialog.value = false
 }
 </script>
@@ -47,7 +49,9 @@ const saveTask = (data: Tasks) => {
         :items="formItems"
         title="Create new task"
         :input="dialog"
+        :values="{ projectId: store.project.id }"
         @save="saveTask($event)"
+        @update-input="dialog = $event"
       />
     </v-card-title>
     <v-divider />

@@ -33,18 +33,18 @@ export const items = async (): Promise<FormItem[]> => {
       placeholder: 'Description'
     },
     {
-      type: 'checkbox',
-      name: 'status',
-      label: 'Status',
-      variant: 'text',
-      placeholder: 'Status'
-    },
-    {
       type: 'textField',
       name: 'date',
       label: 'Date',
       variant: 'date',
       placeholder: 'Date'
+    },
+    {
+      type: 'checkbox',
+      name: 'status',
+      label: 'Status',
+      variant: 'text',
+      placeholder: 'Status'
     }
   ]
 }

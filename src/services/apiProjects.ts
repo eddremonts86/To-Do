@@ -1,6 +1,7 @@
 import { formatDate } from '@/libs/helpers'
 import { axios } from '@/services/axios'
 import type { Projects } from '@/types/globalTypes'
+import { deleteTaskByProjectId } from '@/services/apiTasks'
 
 export const getProjects = async () => {
   try {
@@ -51,6 +52,7 @@ export const updateProject = async (project: Projects) => {
 
 export const deleteProject = async (id: string) => {
   try {
+    await deleteTaskByProjectId(id)
     const { data } = await axios.delete(`/projects/${id}`)
     return data
   } catch (error) {

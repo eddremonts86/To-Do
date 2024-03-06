@@ -1,3 +1,8 @@
 body {
   background-color: aqua;
 }
+
+.projects-name {
+  text-transform: capitalize;
+  font-weight: 600;
+}
