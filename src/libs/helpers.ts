@@ -18,3 +18,8 @@ export const formatDateToLocal = (dateStr: string, locale: string = 'en-US') => 
   const formatter = new Intl.DateTimeFormat(locale, options)
   return formatter.format(date)
 }
+
+export const formatDateToNumber = (dateStr: string) => {
+  const date = new Date(dateStr)
+  return date.getTime()
+}
