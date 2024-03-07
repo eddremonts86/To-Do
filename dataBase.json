@@ -7,8 +7,8 @@
       "endDate": "2024-03-07",
       "priority": "High",
       "description": "<div><strong>To Do**</strong> is a <strong>**task management**</strong> and <strong>**to-do list application**</strong>. With this tool, you can efficiently organize your daily and weekly activities. Here are some key features:</div><div><br></div><div>1. <strong>**My Day**</strong>: An intelligent <strong>**daily planner**</strong> that provides <strong>**personalized suggestions**</strong> to update your to-do list. It helps you focus on the most important tasks.</div><div><br></div><div>2. <strong>**Cross-Platform**</strong>: Microsoft To Do is available on both <strong>**desktop**</strong> and <strong>**mobile**</strong>. You can access your tasks from anywhere and keep your list organized.</div><div><br></div><div>3. <strong>**Task Sharing**</strong>: You can share your to-do lists with friends, family, or coworkers for effective collaboration.</div><div><br></div><div>In summary, To Do is a useful tool for keeping your tasks in check and boosting your productivity. Give it a try and discover how it can simplify your life! 🚀.</div><div><br></div>",
-      "id": "924b",
-      "status": false
+      "status": true,
+      "id": "924b"
     },
     {
       "name": "Women club",
@@ -17,8 +17,8 @@
       "endDate": "2024-03-16",
       "priority": "High",
       "description": "<div>See you all in Santorini</div>",
-      "id": "321a",
-      "status": true
+      "status": true,
+      "id": "321a"
     }
   ],
   "tasks": [
@@ -30,27 +30,27 @@
       "priority": "High",
       "description": "",
       "date": "2024-03-07",
-      "status": true
+      "status": false
     },
     {
-      "id": "4eab",
       "name": "Install Vuetify 3",
       "subTitle": "Look in the documentation for more info",
       "projectId": "924b",
       "priority": "High",
       "description": "",
       "date": "2024-03-07",
-      "status": true
+      "status": true,
+      "id": "4eab"
     },
     {
-      "id": "8b95",
       "name": "Config Eslint and Prettier",
       "subTitle": "App configuration",
       "projectId": "924b",
       "priority": "High",
       "description": "",
       "date": "2024-03-07",
-      "status": false
+      "status": true,
+      "id": "8b95"
     },
     {
       "name": "Config Ts and Vite for compilation",
@@ -59,8 +59,8 @@
       "priority": "Medium",
       "description": "",
       "date": "2024-03-07",
-      "id": "774b",
-      "status": false
+      "status": false,
+      "id": "774b"
     },
     {
       "name": "Install Pinia and Vue-Route",
@@ -70,7 +70,7 @@
       "description": "",
       "date": "2024-03-07",
       "id": "674e",
-      "status": false
+      "status": true
     },
     {
       "name": "Alcohol and drugs NOT allowed",
@@ -83,13 +83,24 @@
       "status": true
     },
     {
-      "id": "2002",
-      "name": "fsdf",
-      "subTitle": "dfsdfs",
+      "id": "d78e",
+      "name": "sda",
+      "subTitle": "sdsa",
+      "projectId": "321a",
+      "priority": "",
+      "description": "",
+      "date": "2024-03-07",
+      "status": true
+    },
+    {
+      "id": "c242",
+      "name": "sdsd",
+      "subTitle": "sdasd",
       "projectId": "924b",
       "priority": "",
       "description": "",
-      "date": "2024-03-07"
+      "date": "2024-03-07",
+      "status": ""
     }
   ]
 }

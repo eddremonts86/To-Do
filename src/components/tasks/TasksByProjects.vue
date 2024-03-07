@@ -7,15 +7,15 @@ import { uniqueId } from '@/libs/helpers'
 import { deleteProject, updateProject } from '@/services/apiProjects'
 import { createTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
-import type { FormItem, Projects, Tasks } from '@/types/globalTypes'
-import { computed, onMounted, ref, watch } from 'vue'
+import type { FormItem, IDictionary, Projects, Tasks } from '@/types/globalTypes'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { formatDateToLocal } from '@/libs/helpers'
 const router = useRouter()
 const store = useProjectsStore()
-const dialog = ref(false)
-const dialogProject = ref(false)
+const dialog = reactive({} as IDictionary)
+const dialogProject = reactive({} as IDictionary)
 const formItems = ref<Array<FormItem>>([])
 const updateId = ref(uniqueId('task_'))
 
@@ -49,7 +49,7 @@ const goToProject = (project: Projects) => {
 const saveTask = async (data: Tasks) => {
   await createTask(data)
   updateId.value = uniqueId('task_')
-  dialog.value = false
+  dialog[data.projectId] = false
 }
 
 const deleteProjectById = async (id: string) => {
@@ -63,9 +63,8 @@ const updateProjects = async (data: Projects) => {
   store.updateProject(data)
   await updateProject(data)
   await store.fetchProjects()
-  dialogProject.value = false
+  dialogProject[data.id] = false
   router.push({ name: 'projects' })
-  
 }
 
 watch(dialog, async (actualValue) => {
@@ -97,17 +96,17 @@ watch(dialogProject, async (actualValue) => {
           >
         </v-btn>
         <formsDialog
-          :key="project.id"
+          :key="'dialog_' + project.id"
           :items="itemsProjects"
           title="Edit Task(project)"
-          :input="dialogProject"
+          :input="dialogProject[project.id]"
           icon="mdi-pencil"
           size="small"
           :values="{
             ...project
           }"
           @save="updateProjects($event)"
-          @update-input="dialogProject = $event"
+          @update-input="dialogProject[project.id] = $event"
         />
         <v-btn icon flat size="small" variant="text" @click="deleteProjectById(project.id)">
           <v-icon>mdi-delete-variant</v-icon>
@@ -142,14 +141,14 @@ watch(dialogProject, async (actualValue) => {
               :key="project.id + '_task_'"
               :items="formItems"
               title="Create new sub-task"
-              :input="dialog"
+              :input="dialog[project.id]"
               :icon="null"
               size="large"
               :values="{
                 projectId: project.id
               }"
               @save="saveTask($event)"
-              @update-input="dialog = $event"
+              @update-input="dialog[project.id] = $event"
             />
           </v-col>
         </v-row>

@@ -2,6 +2,7 @@
 import formsDialog from '@/components/globals/FormsDialog.vue'
 import Task from '@/components/tasks/Task.vue'
 import { items } from '@/components/tasks/const/form'
+import { formatDate } from '@/libs/helpers'
 import { createTask, getTaskByDate, updateTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
 import type { FormItem, Tasks } from '@/types/globalTypes'
@@ -14,8 +15,9 @@ const formItems = ref<Array<FormItem>>([])
 const dialog = ref(false)
 
 const fetchTasks = async () => {
-  const data = await getTaskByDate(date.value)
-  tasks.value = data
+  const formattedDate = formatDate(date.value)
+  const data = await getTaskByDate(formattedDate)
+  tasks.value = data || []
 }
 
 onMounted(

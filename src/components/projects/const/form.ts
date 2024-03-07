@@ -42,11 +42,18 @@ export const items: FormItem[] = [
     options: priorityOptions
   },
   {
-    type: 'htmlEditor',
+    type: 'textArea', // TODO: Add html editor Type: htmlEditor
     name: 'description',
     label: 'Description',
     variant: 'text',
     placeholder: 'Description'
+  },
+  {
+    type: 'checkbox',
+    name: 'status',
+    label: 'Status',
+    variant: 'text',
+    placeholder: 'Status'
   },
   {
     type: 'textField',

@@ -1,11 +1,8 @@
-import { uniqueId as _uniqueId } from 'lodash'
+import { uniqueId as _uniqueId, sortBy } from 'lodash'
 
 export function sliceText(text: string, start: number = 0, end: number) {
   if (!text) return ''
   return text.length >= end ? text.slice(start, end) + ' ...' : text
-}
-export function formatDate(date: string) {
-  return date
 }
 
 export const formatDateToLocal = (dateStr: string, locale: string = 'en-US') => {
@@ -29,8 +26,7 @@ export const formatDateToOther = () => {
   return date
 }
 
-
-export  const formatDateTest = (dateString: string) => {
+export const formatDate = (dateString: string) => {
   const date = new Date(dateString)
   const year = date.getFullYear()
   const month = ('0' + (date.getMonth() + 1)).slice(-2) // Months are 0 based index
@@ -38,8 +34,14 @@ export  const formatDateTest = (dateString: string) => {
   return `${year}-${month}-${day}`
 }
 
-
-
 export const uniqueId = (text = 'id_') => {
   return _uniqueId(text)
+}
+
+export const sortByKeys = (array = [], key = ['name'], order = 'decs') => {
+  const elements = sortBy(array, key)
+  if (order === 'asc') {
+    return elements
+  }
+  return elements.reverse()
 }

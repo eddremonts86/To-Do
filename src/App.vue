@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import userInfo from '@/components/globals/UserInfo.vue'
 import projectsOverview from '@/components/projects/Overview.vue'
-import { formatDateTest } from '@/libs/helpers'
+import { formatDate } from '@/libs/helpers'
 import { useProjectsStore } from '@/stores/projects'
 import type { Projects } from '@/types/globalTypes'
 import { computed, onMounted, ref, watchEffect } from 'vue'
@@ -28,7 +28,7 @@ const projects = computed((): Projects[] => {
 })
 
 const setDate = () => {
-  const formattedDate = formatDateTest(date.value.toString())
+  const formattedDate = formatDate(date.value.toString())
   store.updateTaskDate(formattedDate)
   store.updateProject({} as Projects)
   router.push({ name: 'tasks' })

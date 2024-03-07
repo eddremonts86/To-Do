@@ -1,6 +1,9 @@
-import { formatDate } from '@/libs/helpers'
+import { formatDate, sortByKeys } from '@/libs/helpers'
 import { axios } from '@/services/axios'
 import type { Tasks } from '@/types/globalTypes'
+
+const SORT_PARAMS = [ 'status', 'name'  ]
+
 export const getTasks = async () => {
   try {
     const { data } = await axios.get('/tasks')
@@ -13,7 +16,7 @@ export const getTasks = async () => {
 export const getTask = async (id: string) => {
   try {
     const { data } = await axios.get(`/tasks/${id}`)
-    return data
+    return sortByKeys(data, SORT_PARAMS)
   } catch (error) {
     console.log(error)
   }
@@ -65,7 +68,7 @@ export const deleteTaskByProjectId = async (id: string) => {
 export const getTasksByProject = async (projectId: string) => {
   try {
     const { data } = await axios.get(`/tasks?projectId=${projectId}`)
-    return data
+    return sortByKeys(data, SORT_PARAMS)
   } catch (error) {
     console.log(error)
   }
@@ -73,8 +76,8 @@ export const getTasksByProject = async (projectId: string) => {
 
 export const getTaskByDate = async (date: string) => {
   try {
-     const { data } = await axios.get(`/tasks?date=${date}`)
-    return data
+    const { data } = await axios.get(`/tasks?date=${date}`)
+    return sortByKeys(data, SORT_PARAMS)
   } catch (error) {
     console.log(error)
   }

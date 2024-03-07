@@ -74,6 +74,13 @@ export const items = async (projectsStore: Projects[]): Promise<FormItem[]> => {
       required: true
     },
     {
+      type: 'checkbox',
+      name: 'status',
+      label: 'Status',
+      variant: 'text',
+      placeholder: 'Status'
+    },
+    {
       type: 'textField',
       name: 'id',
       label: 'id',
