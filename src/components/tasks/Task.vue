@@ -5,8 +5,8 @@ import { items } from '@/components/tasks/const/form'
 import { formatDateToLocal } from '@/libs/helpers'
 import { deleteTask, updateTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
-import type { FormItem, Tasks } from '@/types/globalTypes'
-import { computed, onMounted, ref, type PropType } from 'vue'
+import type { FormItem, Projects, Tasks } from '@/types/globalTypes'
+import { computed, onMounted, ref, watch, type PropType } from 'vue'
 
 const props = defineProps({
   task: {
@@ -20,9 +20,13 @@ const formItems = ref<Array<FormItem>>([])
 const dialog = ref(false)
 
 onMounted(async () => {
-  const data = await items()
-  formItems.value = data
+  await init(store.projects)
 })
+
+const init = async (projects: Projects[]) => {
+  const data = await items(projects)
+  formItems.value = data
+}
 
 const status = () => {
   emits('updateTask', { ...props.task, status: !props.task.status })
@@ -55,6 +59,12 @@ const saveTask = async (data: Tasks) => {
   store.updateProjectId(props.task.projectId)
   dialog.value = false
 }
+
+watch(dialog, async (actualValue) => {
+  if (actualValue) {
+    await init(store.projects)
+  }
+})
 </script>
 
 <template>
@@ -63,11 +73,21 @@ const saveTask = async (data: Tasks) => {
       <v-icon :color="completeStatus.color">{{ completeStatus.icon }}</v-icon>
     </div>
     <div class="task-info">
-      <div class="d-flex justify-center align-center positioner-to-right">
+      <div
+        class="d-flex justify-center align-center positioner-to-right"
+        :class="{
+          'positioner-to-center': !props.task.subTitle
+        }"
+      >
         <v-spacer />
-        <div class="d-flex flex-column justify-end align-end mr-1">
+        <div
+          :class="{
+            'd-flex flex-column justify-end align-end': props.task.subTitle,
+            'd-flex flex-row justify-center align-center': !props.task.subTitle
+          }"
+        >
           <span class="date">{{ formatDateToLocal(props.task.date) }}</span>
-          <span class="date">Priority: {{ props.task.priority|| 'None' }}</span>
+          <span class="date">Priority: <b>{{ props.task.priority || 'None' }}</b></span>
         </div>
         <formsDialog
           class="mr-1"
@@ -129,6 +149,7 @@ const saveTask = async (data: Tasks) => {
       font-size: 12px;
       font-weight: normal;
       display: block;
+      margin-right: 5px;
     }
     .description {
       font-size: 14px;
@@ -152,5 +173,8 @@ const saveTask = async (data: Tasks) => {
   position: absolute;
   bottom: 0;
   right: 0;
+}
+.positioner-to-center {
+  bottom: -12px;
 }
 </style>

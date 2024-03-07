@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import formsDialog from '@/components/globals/FormsDialog.vue'
 import Task from '@/components/tasks/Task.vue'

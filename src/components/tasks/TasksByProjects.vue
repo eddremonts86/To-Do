@@ -8,7 +8,7 @@ import { deleteProject, updateProject } from '@/services/apiProjects'
 import { createTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
 import type { FormItem, Projects, Tasks } from '@/types/globalTypes'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { formatDateToLocal } from '@/libs/helpers'
@@ -18,9 +18,9 @@ const dialog = ref(false)
 const dialogProject = ref(false)
 const formItems = ref<Array<FormItem>>([])
 const updateId = ref(uniqueId('task_'))
+
 onMounted(async () => {
-  const data = await items()
-  formItems.value = data
+ await init(store.projects)
 })
 
 const projects = computed((): Projects[] => {
@@ -36,15 +36,22 @@ const projectRouter = computed(() => {
   return router.currentRoute.value.name === 'projects'
 })
 
+const init = async (projects: Projects[]) => {
+  const data = await items(projects)
+  formItems.value = data
+}
+
 const goToProject = (project: Projects) => {
   store.updateProject(project)
   router.push({ name: 'projects' })
 }
+
 const saveTask = async (data: Tasks) => {
   await createTask(data)
   updateId.value = uniqueId('task_')
   dialog.value = false
 }
+
 const deleteProjectById = async (id: string) => {
   store.updateProject({} as Projects)
   await deleteProject(id)
@@ -58,6 +65,17 @@ const updateProjects = async (data: Projects) => {
   dialogProject.value = false
   router.push({ name: 'projects' })
 }
+
+watch(dialog, async (actualValue) => {
+  if (actualValue) {
+    await init(store.projects)
+  }
+})
+watch(dialogProject, async (actualValue) => {
+  if (actualValue) {
+    await init(store.projects)
+  }
+})
 </script>
 <template>
   <div v-if="projects.length" :key="projects.length">
@@ -72,7 +90,9 @@ const updateProjects = async (data: Projects) => {
           variant="text"
           @click="updateProjects({ ...project, status: !project.status })"
         >
-          <v-icon :color="project.status ? 'green darken-4' : 'grey darken-4'">mdi-checkbox-marked-circle-outline</v-icon>
+          <v-icon :color="project.status ? 'green darken-4' : 'grey darken-4'"
+            >mdi-checkbox-marked-circle-outline</v-icon
+          >
         </v-btn>
         <formsDialog
           :key="project.id"

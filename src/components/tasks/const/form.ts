@@ -16,8 +16,8 @@ export const priorityOptions = [
   }
 ]
 
-export const items = async (): Promise<FormItem[]> => {
-  const projects: Projects[] = await getProjects()
+export const items = async (projectsStore: Projects[]): Promise<FormItem[]> => {
+  const projects: Projects[] = projectsStore || (await getProjects())
   const options = projects.map((project: Projects) => {
     return {
       value: project.id,

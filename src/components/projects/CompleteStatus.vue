@@ -45,8 +45,7 @@ const completionColor = (completion: number) => {
     bg-color="#5199e5"
   >
     <template v-slot:default>
-      <span class="cl-projects-items-completion" v-if="loading">...</span>
-      <span class="cl-projects-items-completion" v-else>{{ completion }}%</span>
+      <span class="cl-projects-items-completion">{{ loading ? '...' : completion }}%</span>
     </template>
   </v-progress-circular>
 </template>
