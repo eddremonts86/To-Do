@@ -23,6 +23,7 @@ export const getProject = async (id: string) => {
 
 export const createProject = async (project: Projects) => {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...result } = project
     const projectFormatted = {
       ...result,

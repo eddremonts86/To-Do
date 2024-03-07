@@ -3,7 +3,7 @@ import formsDialog from '@/components/globals/FormsDialog.vue'
 import projectsTasks from '@/components/projects/Details.vue'
 import { items as itemsProjects } from '@/components/projects/const/form'
 import { items } from '@/components/tasks/const/form'
-import { uniqueId } from '@/libs/helpers'
+import { uniqueId, formatDateToLocal } from '@/libs/helpers'
 import { deleteProject, updateProject } from '@/services/apiProjects'
 import { createTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
@@ -11,7 +11,6 @@ import type { FormItem, IDictionary, Projects, Tasks } from '@/types/globalTypes
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { formatDateToLocal } from '@/libs/helpers'
 const router = useRouter()
 const store = useProjectsStore()
 const dialog = reactive({} as IDictionary)

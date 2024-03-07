@@ -28,7 +28,7 @@ const projectRouter = computed(() => {
 })
 
 async function fetchTasks() {
-  const tasks = await getTasksByProject(props.projectId)
+  const tasks = await getTasksByProject(props.projectId) || []
   if (projectRouter.value) {
     projectTasks.value = tasks
   } else {

@@ -17,7 +17,7 @@ onMounted(async () => {
 
 const getTasksData = async () => {
   loading.value = true
-  const tasks: Tasks[] = await getTasksByProject(props.projectId)
+  const tasks: Tasks[] = await getTasksByProject(props.projectId) || []
   const completedTasks = tasks.filter((task) => task.status)
   completion.value = Math.round((completedTasks.length / tasks.length) * 100) || 0
   loading.value = false

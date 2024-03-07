@@ -205,22 +205,22 @@ export default defineComponent({
 
 <!-- Needed to get styling up to Resights standard -->
 <style lang="scss" scoped>
-::v-deep .v-text-field__slot {
+::deep .v-text-field__slot {
   padding-bottom: 54px !important;
 }
 .trix-override {
   position: relative;
-  ::v-deep .trix-content {
+  ::deep .trix-content {
     color: #44444f !important;
     max-height: 450px;
     overflow-y: auto;
   }
-  ::v-deep trix-editor {
+  ::deep trix-editor {
     background-color: white !important;
     border: none;
     padding: 25px;
   }
-  ::v-deep trix-toolbar {
+  ::deep trix-toolbar {
     border: 1px solid lightgrey;
     border-radius: 5px;
     position: absolute;
@@ -228,72 +228,72 @@ export default defineComponent({
     left: -1px;
     visibility: hidden;
   }
-  ::v-deep .trix-button-group {
+  ::deep .trix-button-group {
     background-color: white;
     border: none;
     margin-bottom: 0px;
     margin-left: 0px;
   }
-  ::v-deep .trix-button--icon {
+  ::deep .trix-button--icon {
     width: 28px;
     height: 24px;
   }
-  ::v-deep .trix-button--icon:before {
+  ::deep .trix-button--icon:before {
     margin: auto;
     width: 19px;
     height: 19px;
   }
-  ::v-deep .trix-dialog--link {
+  ::deep .trix-dialog--link {
     width: fit-content;
     padding: 2px 2px;
     border-top: none;
   }
-  ::v-deep .trix-button--icon-bold {
+  ::deep .trix-button--icon-bold {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
   }
-  ::v-deep .trix-button--icon-heading-1 {
+  ::deep .trix-button--icon-heading-1 {
     display: none !important;
   }
-  ::v-deep .trix-button--icon-quote {
+  ::deep .trix-button--icon-quote {
     display: none !important;
   }
-  ::v-deep .trix-button--icon-code {
+  ::deep .trix-button--icon-code {
     display: none !important;
   }
-  ::v-deep .trix-button-group--file-tools {
+  ::deep .trix-button-group--file-tools {
     display: none !important;
   }
-  ::v-deep .trix-button--icon-undo {
+  ::deep .trix-button--icon-undo {
     display: none !important;
   }
-  ::v-deep .trix-button--icon-redo {
+  ::deep .trix-button--icon-redo {
     display: none !important;
   }
-  ::v-deep .trix-button--icon-link {
+  ::deep .trix-button--icon-link {
     border-right: 1px solid lightgrey;
   }
-  ::v-deep .trix-button {
+  ::deep .trix-button {
     border: none;
   }
-  ::v-deep .trix-button:hover {
+  ::deep .trix-button:hover {
     background-color: rgb(244, 244, 244);
   }
-  ::v-deep .trix-button.trix-active {
+  ::deep .trix-button.trix-active {
     background: blue !important;
   }
-  ::v-deep .trix-button.trix-active::before {
+  ::deep .trix-button.trix-active::before {
     filter: invert(1) !important;
   }
 }
 .trix-override.note-item {
-  ::v-deep trix-toolbar {
+  ::deep trix-toolbar {
     top: -40px;
     left: 0px;
   }
 }
 .trix-override.focused {
-  ::v-deep .trix-input--dialog {
+  ::deep .trix-input--dialog {
     pointer-events: none !important;
   }
 }
