@@ -21,6 +21,7 @@ export const getTask = async (id: string) => {
 
 export const createTask = async (task: Tasks) => {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...result } = task
     const taskFormatted = { ...result, date: formatDate(task.date) }
     const { data } = await axios.post('/tasks', taskFormatted)
@@ -72,8 +73,7 @@ export const getTasksByProject = async (projectId: string) => {
 
 export const getTaskByDate = async (date: string) => {
   try {
-    const [day, month, year] = date.split('/')
-    const { data } = await axios.get(`/tasks?date=${`${year}-${month}-${day}`}`)
+     const { data } = await axios.get(`/tasks?date=${date}`)
     return data
   } catch (error) {
     console.log(error)

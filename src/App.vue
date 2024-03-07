@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import userInfo from '@/components/globals/UserInfo.vue'
 import projectsOverview from '@/components/projects/Overview.vue'
+import { formatDateTest } from '@/libs/helpers'
 import { useProjectsStore } from '@/stores/projects'
 import type { Projects } from '@/types/globalTypes'
 import { computed, onMounted, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify'
+
 const display = ref(useDisplay())
 const store = useProjectsStore()
 const date = ref(new Date())
@@ -26,9 +28,10 @@ const projects = computed((): Projects[] => {
 })
 
 const setDate = () => {
-  router.push({ name: 'tasks' })
-  store.updateTaskDate(date.value.toLocaleDateString())
+  const formattedDate = formatDateTest(date.value.toString())
+  store.updateTaskDate(formattedDate)
   store.updateProject({} as Projects)
+  router.push({ name: 'tasks' })
 }
 </script>
 
@@ -47,6 +50,7 @@ const setDate = () => {
               <v-divider />
               <v-date-picker
                 v-if="display.smAndUp"
+                locale="en-US"
                 hide-header
                 elevation="0"
                 title="Chose a day"

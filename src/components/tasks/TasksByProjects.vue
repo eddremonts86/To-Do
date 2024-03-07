@@ -60,10 +60,12 @@ const deleteProjectById = async (id: string) => {
 }
 
 const updateProjects = async (data: Projects) => {
+  store.updateProject(data)
   await updateProject(data)
   await store.fetchProjects()
   dialogProject.value = false
   router.push({ name: 'projects' })
+  
 }
 
 watch(dialog, async (actualValue) => {

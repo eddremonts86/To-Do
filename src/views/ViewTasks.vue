@@ -21,7 +21,7 @@ const fetchTasks = async () => {
 onMounted(
   watchEffect(async () => {
     await fetchTasks()
-    const data = await items()
+    const data = await items(store.projects)
     formItems.value = data
   })
 )

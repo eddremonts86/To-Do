@@ -137,8 +137,8 @@ watch(dialog, async (actualValue) => {
   align-items: center;
   min-width: 100%;
   &:hover {
-    background-color: rgb(194 216 237 / 90%) !important;
-    color: white;
+    background-color: rgb(0 105 217 / 62%) !important;
+    color: rgb(255, 255, 255);
   }
   .task-info {
     width: 100%;

@@ -94,7 +94,7 @@ const deleteProjectById = async (event: Event, id: string) => {
   &:hover {
     cursor: pointer;
     color: rgb(255, 255, 255);
-    background: rgba(41, 133, 231, 0.616);
+    background: rgb(0 105 217 / 62%)
   }
   .projects-name {
     font-size: 0.9rem;
