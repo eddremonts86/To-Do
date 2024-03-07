@@ -27,9 +27,9 @@ export const formatDateToOther = () => {
 }
 
 export const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
+  const date = dateString ? new Date(dateString) : new Date()
   const year = date.getFullYear()
-  const month = ('0' + (date.getMonth() + 1)).slice(-2) // Months are 0 based index
+  const month = ('0' + (date.getMonth() + 1)).slice(-2)
   const day = ('0' + date.getDate()).slice(-2)
   return `${year}-${month}-${day}`
 }

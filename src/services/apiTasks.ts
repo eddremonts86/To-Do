@@ -2,7 +2,7 @@ import { formatDate, sortByKeys } from '@/libs/helpers'
 import { axios } from '@/services/axios'
 import type { Tasks } from '@/types/globalTypes'
 
-const SORT_PARAMS = [ 'status', 'name'  ]
+const SORT_PARAMS = ['status', 'name']
 
 export const getTasks = async () => {
   try {

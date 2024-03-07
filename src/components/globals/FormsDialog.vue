@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import AppForms from '@/components/globals/AppForms.vue';
-import type { FormItem, IDictionary } from '@/types/globalTypes';
-import { computed, reactive, ref } from 'vue';
+import AppForms from '@/components/globals/AppForms.vue'
+import type { FormItem, IDictionary } from '@/types/globalTypes'
+import { computed, reactive, ref } from 'vue'
 const props = defineProps<{
   items: FormItem[]
   input: boolean

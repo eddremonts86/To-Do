@@ -5,5 +5,6 @@ describe('My First Test', () => {
     cy.visit('/')
     cy.contains('p', 'Eduardo Inerarte')
     cy.contains('p', 'eduardo.inerarte@gmail.com')
+    cy.get('h2[data-cy=ProjectsList]').click()
   })
 })

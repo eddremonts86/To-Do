@@ -49,7 +49,7 @@ const deleteProjectById = async (event: Event, id: string) => {
 <template>
   <div class="pa-4">
     <div class="d-flex justify-center align-center">
-      <h2 @click="router.push({ name: 'home' })">Projects(Tasks)</h2>
+      <h2 @click="router.push({ name: 'home' })" data-cy="ProjectsList">Projects(Tasks)</h2>
       <v-spacer />
       <formsDialog
         :items="items"
@@ -94,7 +94,7 @@ const deleteProjectById = async (event: Event, id: string) => {
   &:hover {
     cursor: pointer;
     color: rgb(255, 255, 255);
-    background: rgb(0 105 217 / 62%)
+    background: rgb(0 105 217 / 62%);
   }
   .projects-name {
     font-size: 0.9rem;

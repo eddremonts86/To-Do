@@ -23,16 +23,9 @@ describe('sliceText', () => {
 
 describe('formatDate', () => {
   it('should return the formatted date in the local date format', () => {
-    const date = '2022-01-01'
+    const date = '1/1/2022'
     const formattedDate = formatDate(date)
-    expect(formattedDate).toBe('1/1/2022') // Change the expected date format based on your locale
-  })
-
-  it('should return the current date in the local date format if the input date is empty', () => {
-    const date = ''
-    const formattedDate = formatDate(date)
-    const currentDate = new Date().toLocaleDateString() // Change the expected date format based on your locale
-    expect(formattedDate).toBe(currentDate)
+    expect(formattedDate).toBe('2022-01-01')
   })
 
   it('should return the current date in the local date format if the input date is empty', () => {
