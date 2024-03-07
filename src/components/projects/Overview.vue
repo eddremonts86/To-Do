@@ -86,7 +86,7 @@ const deleteProjectById = async (event: Event, id: string) => {
   gap: 1rem;
   align-items: center;
   justify-items: center;
-  background: #5199e552;
+  background: rgb(81 153 229 / 20%);
   margin-bottom: 5px;
   padding: 5px 8px;
   border-radius: 12px;
@@ -95,6 +95,9 @@ const deleteProjectById = async (event: Event, id: string) => {
     cursor: pointer;
     color: rgb(255, 255, 255);
     background: rgba(41, 133, 231, 0.616);
+  }
+  .projects-name {
+    font-size: 0.9rem;
   }
 }
 </style>

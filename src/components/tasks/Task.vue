@@ -87,7 +87,9 @@ watch(dialog, async (actualValue) => {
           }"
         >
           <span class="date">{{ formatDateToLocal(props.task.date) }}</span>
-          <span class="date">Priority: <b>{{ props.task.priority || 'None' }}</b></span>
+          <span class="date"
+            >Priority: <b>{{ props.task.priority || 'None' }}</b></span
+          >
         </div>
         <formsDialog
           class="mr-1"
@@ -125,7 +127,7 @@ watch(dialog, async (actualValue) => {
 
 <style lang="scss">
 .task-item {
-  background-color: rgb(233 233 231 / 43%);
+  background-color: rgb(194 216 237 / 23%) !important;
   padding: 15px;
   margin: 8px 0;
   border-radius: 12px;
@@ -135,7 +137,8 @@ watch(dialog, async (actualValue) => {
   align-items: center;
   min-width: 100%;
   &:hover {
-    background-color: rgb(194 216 237 / 33%);
+    background-color: rgb(194 216 237 / 90%) !important;
+    color: white;
   }
   .task-info {
     width: 100%;
@@ -161,7 +164,7 @@ watch(dialog, async (actualValue) => {
   }
 }
 .active-item {
-  background-color: rgb(194 216 237 / 33%) !important;
+  background-color: rgb(81 153 229 / 20%) !important;
   .task-info {
     .name,
     .description {

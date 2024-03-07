@@ -31,14 +31,16 @@ export const items = async (projectsStore: Projects[]): Promise<FormItem[]> => {
       name: 'name',
       label: 'Title',
       variant: 'text',
-      placeholder: 'Title'
+      placeholder: 'Title',
+      required: true
     },
     {
       type: 'textField',
       name: 'subTitle',
       label: 'Subtitle',
       variant: 'text',
-      placeholder: 'Subtitle'
+      placeholder: 'Subtitle',
+      required: true
     },
     {
       type: 'select',
@@ -68,7 +70,8 @@ export const items = async (projectsStore: Projects[]): Promise<FormItem[]> => {
       name: 'date',
       label: 'Date',
       variant: 'date',
-      placeholder: 'Date'
+      placeholder: 'Date',
+      required: true
     },
     {
       type: 'textField',

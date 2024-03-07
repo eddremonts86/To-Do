@@ -1,73 +1,86 @@
 {
   "projects": [
     {
-      "id": "e934",
-      "name": "fdgfh",
-      "subTitle": "",
+      "name": "Create a To-Do app",
+      "subTitle": "A simple to-do app for my own tasks and personal projects",
       "startDate": "2024-03-07",
       "endDate": "2024-03-07",
-      "priority": "",
-      "description": "",
-      "status": true
+      "priority": "High",
+      "description": "<div><strong>To Do**</strong> is a <strong>**task management**</strong> and <strong>**to-do list application**</strong>. With this tool, you can efficiently organize your daily and weekly activities. Here are some key features:</div><div><br></div><div>1. <strong>**My Day**</strong>: An intelligent <strong>**daily planner**</strong> that provides <strong>**personalized suggestions**</strong> to update your to-do list. It helps you focus on the most important tasks.</div><div><br></div><div>2. <strong>**Cross-Platform**</strong>: Microsoft To Do is available on both <strong>**desktop**</strong> and <strong>**mobile**</strong>. You can access your tasks from anywhere and keep your list organized.</div><div><br></div><div>3. <strong>**Task Sharing**</strong>: You can share your to-do lists with friends, family, or coworkers for effective collaboration.</div><div><br></div><div>In summary, To Do is a useful tool for keeping your tasks in check and boosting your productivity. Give it a try and discover how it can simplify your life! 🚀.</div><div><br></div>",
+      "id": "924b",
+      "status": false
     },
     {
-      "id": "7146",
-      "name": "cdfvgbhnjukil",
-      "subTitle": "",
-      "startDate": "2024-03-07",
-      "endDate": "2024-03-07",
-      "priority": "",
-      "description": "",
+      "name": "Women club",
+      "subTitle": "No men allowed",
+      "startDate": "2024-03-09",
+      "endDate": "2024-03-16",
+      "priority": "High",
+      "description": "<div>See you all in Santorini</div>",
+      "id": "321a",
       "status": true
-    },
-    {
-      "name": "sxcdvfgbhnjklæ-ø",
-      "subTitle": "",
-      "startDate": "2024-03-07",
-      "endDate": "2024-04-06",
-      "priority": "",
-      "description": "",
-      "id": "7c90"
     }
   ],
   "tasks": [
     {
-      "id": "49ad",
-      "name": "wdfegrthyj",
-      "subTitle": "egrthyjuk",
-      "projectId": "e934",
-      "priority": "Low",
-      "description": "sdvfbgnhjmk,iloæpøå'",
+      "id": "4ba5",
+      "name": "Create Vue 3 app using vue-create",
+      "subTitle": "Look in the vue 3 documentations for the command",
+      "projectId": "924b",
+      "priority": "High",
+      "description": "",
+      "date": "2024-03-07",
+      "status": true
+    },
+    {
+      "id": "4eab",
+      "name": "Install Vuetify 3",
+      "subTitle": "Look in the documentation for more info",
+      "projectId": "924b",
+      "priority": "High",
+      "description": "",
+      "date": "2024-03-07",
+      "status": true
+    },
+    {
+      "id": "8b95",
+      "name": "Config Eslint and Prettier",
+      "subTitle": "App configuration",
+      "projectId": "924b",
+      "priority": "High",
+      "description": "",
       "date": "2024-03-07",
       "status": false
     },
     {
-      "name": "Oer4t5y6u789",
-      "subTitle": "qsdwefrgt5hy6u7i8",
-      "projectId": "e934",
-      "priority": "Low",
-      "description": "dfergtyui8op",
-      "date": "2024-03-06",
-      "id": "1526"
-    },
-    {
-      "id": "1746",
-      "name": "xcvdfbghnjklæ",
-      "subTitle": "",
-      "projectId": "7146",
-      "priority": "",
+      "name": "Config Ts and Vite for compilation",
+      "subTitle": "Configuration",
+      "projectId": "924b",
+      "priority": "Medium",
       "description": "",
-      "date": "2024-03-07"
+      "date": "2024-03-07",
+      "id": "774b",
+      "status": true
     },
     {
-      "id": "1de1",
-      "name": "axsc dvfbgnhjklæ-",
-      "subTitle": "dvfbgnhm",
-      "projectId": "7c90",
+      "name": "Install Pinia and Vue-Route",
+      "subTitle": "App Config",
+      "projectId": "924b",
+      "priority": "High",
+      "description": "",
+      "date": "2024-03-07",
+      "id": "674e",
+      "status": false
+    },
+    {
+      "id": "bd90",
+      "name": "Alcohol and drugs NOT allowed",
+      "subTitle": "but remember the bikini",
+      "projectId": "321a",
       "priority": "",
       "description": "",
       "date": "2024-03-07",
-      "status": true
+      "status": false
     }
   ]
 }

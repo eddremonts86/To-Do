@@ -1,3 +1,11 @@
+export type IDictionary = {
+  [key: string]: any
+}
+
+export type Dictionary<T> = {
+  [key: string]: T
+}
+
 type BaseAction = {
   id: string
   name: string

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import AppForms from '@/components/globals/AppForms.vue'
-import type { FormItem } from '@/types/globalTypes'
-import { computed, reactive } from 'vue'
+import AppForms from '@/components/globals/AppForms.vue';
+import type { FormItem, IDictionary } from '@/types/globalTypes';
+import { computed, reactive, ref } from 'vue';
 const props = defineProps<{
   items: FormItem[]
   input: boolean
@@ -12,6 +12,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['submit', 'update-input', 'save'])
+let data = reactive<IDictionary>({})
+const validForm = ref(false)
 
 const dialog = computed({
   get: () => props.input || false,
@@ -20,20 +22,39 @@ const dialog = computed({
   }
 })
 
-let data = reactive({})
+const requiredItems = (dataValues: IDictionary) => {
+  if (!Object.keys(dataValues).length) return false
+  const requiredItems = props.items.reduce((acc, item: FormItem) => {
+    if (item.required) {
+      //@ts-ignore
+      acc.push(item.name)
+    }
+    return acc
+  }, [])
+
+  validForm.value = requiredItems.every((name: keyof IDictionary) => {
+    if (dataValues[name as string].length >= 3) {
+      return true
+    }
+    return false
+  })
+}
 
 const submit = (dataSubmit: any) => {
+  requiredItems(dataSubmit)
   data = dataSubmit
   emit('submit', dataSubmit)
 }
 
 const save = () => {
-  emit('save', data)
+  if (validForm.value) {
+    emit('save', data)
+  }
 }
 </script>
 
 <template>
-  <v-dialog max-width="500" v-model="dialog">
+  <v-dialog max-width="500" v-model="dialog" persistent>
     <template v-slot:activator="{ props: activatorProps }">
       <v-btn icon flat variant="text" v-bind="activatorProps" :size="props.size || 'large'">
         <v-icon>{{ icon ? icon : 'mdi-plus' }}</v-icon>
@@ -58,6 +79,7 @@ const save = () => {
           <v-spacer></v-spacer>
           <v-btn
             text="Save"
+            :disabled="!validForm"
             @click="save()"
             class="text-none ms-4 text-white"
             color="blue-darken-4"

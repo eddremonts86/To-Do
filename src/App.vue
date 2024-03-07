@@ -37,8 +37,8 @@ const setDate = () => {
     <v-main>
       <v-container>
         <v-row class="main-container" no-gutters>
-          <v-col xs="12" sm="12" md="4" lg="3" class="td-nav">
-            <div class="nav-container">
+          <v-col class="td-nav" xs="12" sm="12" md="12" lg="3">
+            <div class="nav-container d-flex flex-column justify-start align-center">
               <userInfo
                 name="Eduardo Inerarte"
                 email="eduardo.inerarte@gmail.com"
@@ -62,11 +62,13 @@ const setDate = () => {
                 v-model="date"
                 v-else
                 hide-details
+                variant="outlined"
+                class="w-100"
               ></v-text-field>
             </div>
             <projectsOverview :projects="projects" class="nav-container" />
           </v-col>
-          <v-col xs="12" sm="12" md="8" lg="9" class="td-main-content">
+          <v-col class="td-main-content">
             <RouterView />
           </v-col>
         </v-row>
@@ -77,17 +79,17 @@ const setDate = () => {
 
 <style lang="scss">
 .td-nav {
-  max-width: 380px !important;
   border-radius: 16px !important;
+  min-width: 380px !important;
   margin: 0;
   @media only screen and (max-width: 600px) {
-    max-width: 100% !important;
+    min-width: 100% !important;
   }
 }
 .td-main-content {
   margin: 0;
   padding: 0 16px !important;
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 1024px) {
     padding: 0 !important;
   }
 }
@@ -102,8 +104,13 @@ const setDate = () => {
   border-radius: 16px !important;
   background-color: rgb(81 153 229 / 8%) !important;
   padding: 16px !important;
+  min-height: calc(100dvh - 32px);
+  height: fit-content;
 }
 .v-date-picker-month {
   padding: 0 !important;
+}
+.w-100 {
+  width: -webkit-fill-available !important;
 }
 </style>

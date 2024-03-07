@@ -1,9 +1,9 @@
 <script lang="ts" setup>
+import htmlEditor from '@/components/globals/HtmlEditor.vue'
 import { formatDateToOther } from '@/libs/helpers'
 import type { FormItem } from '@/types/globalTypes'
 import type { PropType } from 'vue'
 import { onMounted, reactive, watch } from 'vue'
-
 const dataSubmit: any = reactive({})
 const props = defineProps({
   items: {
@@ -103,6 +103,18 @@ watch(dataSubmit, () => {
           :hide-details="true"
           density="compact"
         />
+
+        <span v-if="item.type === 'htmlEditor'" v-text="item.placeholder"></span>
+        <htmlEditor
+          v-if="item.type === 'htmlEditor'"
+          :value="dataSubmit[item.name]"
+          @input="
+            (value: string) => {
+              dataSubmit[item.name] = value
+            }
+          "
+          class="htmlEditor"
+        />
       </v-col>
     </v-row>
   </form>
@@ -112,5 +124,12 @@ watch(dataSubmit, () => {
 .form {
   width: 100%;
   height: auto;
+}
+.htmlEditor {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ababab;
+  border-radius: 4px;
+  padding: 5px;
 }
 </style>

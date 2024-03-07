@@ -1,8 +1,18 @@
 body {
-  background-color: aqua;
+  background-color: white;
 }
 
 .projects-name {
   text-transform: capitalize;
   font-weight: 600;
+}
+
+.text-balanced {
+  text-wrap: balance;
+}
+
+@media only screen and (max-width: 600px) {
+  .text-balanced {
+    line-height: 1.5em;
+  }
 }

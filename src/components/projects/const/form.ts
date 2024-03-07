@@ -7,14 +7,16 @@ export const items: FormItem[] = [
     name: 'name',
     label: 'Title',
     variant: 'text',
-    placeholder: 'Title'
+    placeholder: 'Title',
+    required: true
   },
   {
     type: 'textField',
     name: 'subTitle',
     label: 'Subtitle',
     variant: 'text',
-    placeholder: 'Subtitle'
+    placeholder: 'Subtitle',
+    required: true
   },
 
   {
@@ -40,7 +42,7 @@ export const items: FormItem[] = [
     options: priorityOptions
   },
   {
-    type: 'textArea',
+    type: 'htmlEditor',
     name: 'description',
     label: 'Description',
     variant: 'text',

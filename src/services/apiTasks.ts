@@ -73,8 +73,7 @@ export const getTasksByProject = async (projectId: string) => {
 export const getTaskByDate = async (date: string) => {
   try {
     const [day, month, year] = date.split('/')
-    const dateFormatted = `${year}-${+day <= 9 ? `0${day}` : day}-${+month <= 9 ? `0${month}` : month}`
-    const { data } = await axios.get(`/tasks?date=${dateFormatted}`)
+    const { data } = await axios.get(`/tasks?date=${`${year}-${month}-${day}`}`)
     return data
   } catch (error) {
     console.log(error)

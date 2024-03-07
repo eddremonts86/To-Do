@@ -3,12 +3,12 @@ import formsDialog from '@/components/globals/FormsDialog.vue'
 import projectsTasks from '@/components/projects/Details.vue'
 import { items as itemsProjects } from '@/components/projects/const/form'
 import { items } from '@/components/tasks/const/form'
-import { sliceText, uniqueId } from '@/libs/helpers'
+import { uniqueId } from '@/libs/helpers'
 import { deleteProject, updateProject } from '@/services/apiProjects'
 import { createTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
 import type { FormItem, Projects, Tasks } from '@/types/globalTypes'
-import { computed, ref, watch, onMounted } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { formatDateToLocal } from '@/libs/helpers'
@@ -20,7 +20,7 @@ const formItems = ref<Array<FormItem>>([])
 const updateId = ref(uniqueId('task_'))
 
 onMounted(async () => {
- await init(store.projects)
+  await init(store.projects)
 })
 
 const projects = computed((): Projects[] => {
@@ -81,7 +81,7 @@ watch(dialogProject, async (actualValue) => {
   <div v-if="projects.length" :key="projects.length">
     <v-card class="mb-4" rounded="lg" elevation="0" v-for="project in projects" :key="project.id">
       <v-card-title class="d-flex justify-center align-center">
-        <h3 class="projects-name">{{ project.name }}</h3>
+        <p class="projects-name text-balanced">{{ project.name }}</p>
         <v-spacer />
         <v-btn
           icon
@@ -112,21 +112,29 @@ watch(dialogProject, async (actualValue) => {
         </v-btn>
       </v-card-title>
       <v-divider />
-      <v-card-subtitle class="pa-4">
-        <p class="text-bold">
-          From: <b>{{ formatDateToLocal(project.startDate) }}</b> - To:
-          <b>{{ formatDateToLocal(project.endDate) }}</b>
-        </p>
-        <h4 class="text-bold mt-3 mb-1">{{ project.subTitle }}</h4>
-        <p class="text-wrap">
-          {{ !projectRouter ? sliceText(project.description, 0, 50) : project.description }}
-        </p>
+      <v-card-subtitle class="pa-2">
+        <v-expansion-panels multiple flat>
+          <v-expansion-panel>
+            <v-expansion-panel-title class="pl-2">
+              <div>
+                <h4 class="text-bold mb-1 text-balanced">{{ project.subTitle }}</h4>
+                <p class="text-bold mb-2">
+                  From: <b>{{ formatDateToLocal(project.startDate) }}</b> - To:
+                  <b>{{ formatDateToLocal(project.endDate) }}</b>
+                </p>
+                <p>Description: <b>click to see here!!!</b></p>
+              </div>
+            </v-expansion-panel-title>
+            <v-expansion-panel-text>
+              <p class="text-wrap py-3" v-html="project.description"></p
+            ></v-expansion-panel-text> </v-expansion-panel
+        ></v-expansion-panels>
       </v-card-subtitle>
       <v-divider />
       <v-card-text class="pa-4">
         <v-row>
           <v-col cols="12" class="d-flex justify-center align-center mt-0 pt-0">
-            <h2>Sub-Tasks</h2>
+            <h3>Sub-Tasks</h3>
             <v-spacer />
             <formsDialog
               :key="project.id + '_task_'"
