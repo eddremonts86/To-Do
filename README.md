@@ -32,6 +32,11 @@ npm install
 ```sh
 npm run dev
 ```
+### Data base for Development
+
+```sh
+ npm run db
+```
 
 ### Type-Check, Compile and Minify for Production
 

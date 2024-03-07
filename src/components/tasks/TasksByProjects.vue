@@ -65,6 +65,15 @@ const updateProjects = async (data: Projects) => {
       <v-card-title class="d-flex justify-center align-center">
         <h3 class="projects-name">{{ project.name }}</h3>
         <v-spacer />
+        <v-btn
+          icon
+          flat
+          size="small"
+          variant="text"
+          @click="updateProjects({ ...project, status: !project.status })"
+        >
+          <v-icon :color="project.status ? 'green darken-4' : 'grey darken-4'">mdi-checkbox-marked-circle-outline</v-icon>
+        </v-btn>
         <formsDialog
           :key="project.id"
           :items="itemsProjects"

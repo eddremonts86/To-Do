@@ -49,7 +49,7 @@ const deleteProjectById = async (event: Event, id: string) => {
 <template>
   <div class="pa-4">
     <div class="d-flex justify-center align-center">
-      <h2>All my tasks</h2>
+      <h2 @click="router.push({ name: 'home' })">Projects(Tasks)</h2>
       <v-spacer />
       <formsDialog
         :items="items"
