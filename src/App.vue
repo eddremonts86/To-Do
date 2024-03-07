@@ -3,25 +3,27 @@ import userInfo from '@/components/globals/UserInfo.vue'
 import projectsOverview from '@/components/projects/Overview.vue'
 import { useProjectsStore } from '@/stores/projects'
 import type { Projects } from '@/types/globalTypes'
-import { onMounted, ref, watchEffect } from 'vue'
+import { computed, onMounted, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify'
 const display = ref(useDisplay())
-const projects = ref<Array<Projects>>([])
 const store = useProjectsStore()
 const date = ref(new Date())
 const router = useRouter()
 
 const loadProjects = async () => {
   await store.fetchProjects()
-  projects.value = store.projects
 }
-
 onMounted(
   watchEffect(async () => {
     await loadProjects()
   })
 )
+
+const projects = computed((): Projects[] => {
+  const projects = store.projects
+  return projects
+})
 
 const setDate = () => {
   router.push({ name: 'tasks' })
@@ -37,7 +39,11 @@ const setDate = () => {
         <v-row class="main-container" no-gutters>
           <v-col xs="12" sm="12" md="4" lg="3" class="td-nav">
             <div class="nav-container">
-              <userInfo />
+              <userInfo
+                name="Eduardo Inerarte"
+                email="eduardo.inerarte@gmail.com"
+                img="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png"
+              />
               <v-divider />
               <v-date-picker
                 v-if="display.smAndUp"
@@ -58,12 +64,7 @@ const setDate = () => {
                 hide-details
               ></v-text-field>
             </div>
-            <projectsOverview
-              :projects="projects"
-              :key="projects.length"
-              class="nav-container"
-              @reloadProjects="loadProjects()"
-            />
+            <projectsOverview :projects="projects" class="nav-container" />
           </v-col>
           <v-col xs="12" sm="12" md="8" lg="9" class="td-main-content">
             <RouterView />

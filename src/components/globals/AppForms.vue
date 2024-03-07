@@ -1,7 +1,9 @@
 <script lang="ts" setup>
+import { formatDateToOther } from '@/libs/helpers'
 import type { FormItem } from '@/types/globalTypes'
 import type { PropType } from 'vue'
 import { onMounted, reactive, watch } from 'vue'
+
 const dataSubmit: any = reactive({})
 const props = defineProps({
   items: {
@@ -16,7 +18,12 @@ const props = defineProps({
 
 onMounted(() => {
   props.items.map((ele) => {
-    dataSubmit[ele.name] = props.values[ele.name] || ''
+    if (ele.variant === 'date') {
+      var todayDate = formatDateToOther()
+      dataSubmit[ele.name] = props.values[ele.name] ? props.values[ele.name] : todayDate
+    } else {
+      dataSubmit[ele.name] = props.values[ele.name] || ''
+    }
   })
 })
 
@@ -41,10 +48,11 @@ watch(dataSubmit, () => {
         v-for="(item, index) in props.items"
         :key="index"
         cols="12"
-        :md="props.items.length > 6 ? 6 : 12"
+        :md="props.items.length > 8 ? 6 : 12"
       >
         <v-text-field
           v-if="item.type === 'textField'"
+          :class="item.name === 'id' ? 'd-none' : ''"
           v-model.trim="dataSubmit[item.name]"
           :label="item.label"
           :placeholder="item.placeholder"

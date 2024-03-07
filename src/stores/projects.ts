@@ -23,6 +23,10 @@ export const useProjectsStore = defineStore('projects', {
       return data
     },
 
+    updateProjects(projects: Projects[]) {
+      this.projects = projects
+    },
+
     updateProject(project: Projects) {
       this.project = project
     },

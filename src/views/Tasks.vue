@@ -49,6 +49,8 @@ const saveTask = async (data: Tasks) => {
         :items="formItems"
         title="Create new task"
         :input="dialog"
+        icon="mdi-plus"
+        size="large"
         :values="{ projectId: store.project.id }"
         @save="saveTask($event)"
         @update-input="dialog = $event"

@@ -23,8 +23,9 @@ export const getProject = async (id: string) => {
 
 export const createProject = async (project: Projects) => {
   try {
+    const { id, ...result } = project
     const projectFormatted = {
-      ...project,
+      ...result,
       startDate: formatDate(project.startDate),
       endDate: formatDate(project.endDate)
     }

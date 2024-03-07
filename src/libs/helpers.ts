@@ -5,8 +5,7 @@ export function sliceText(text: string, start: number = 0, end: number) {
   return text.length >= end ? text.slice(start, end) + ' ...' : text
 }
 export function formatDate(date: string) {
-  if (!date) return new Date().toLocaleDateString()
-  return new Date(date).toLocaleDateString()
+  return date
 }
 
 export const formatDateToLocal = (dateStr: string, locale: string = 'en-US') => {
@@ -23,6 +22,11 @@ export const formatDateToLocal = (dateStr: string, locale: string = 'en-US') => 
 export const formatDateToNumber = (dateStr: string) => {
   const date = new Date(dateStr)
   return date.getTime()
+}
+
+export const formatDateToOther = () => {
+  const date = new Date().toISOString().slice(0, 10)
+  return date
 }
 
 export const uniqueId = (text = 'id_') => {

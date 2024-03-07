@@ -13,7 +13,6 @@ let dialogValues = reactive({} as Projects)
 const router = useRouter()
 const store = useProjectsStore()
 const dialog = ref(false)
-const emits = defineEmits(['reloadProjects'])
 const props = defineProps<{
   projects: Projects[]
 }>()
@@ -23,36 +22,42 @@ const updateData = (data: any) => {
 }
 
 const saveProjects = async () => {
-  if (Object.keys(dialogValues).length) {
-    await createProject(dialogValues)
+  if (!Object.keys(dialogValues).length) {
+    return
   }
-  emits('reloadProjects')
+  await createProject(dialogValues)
+  await store.fetchProjects()
   dialog.value = false
+  router.push({ name: 'home' })
 }
 
-const goToProject = (project: Projects) => {
+const goToProject = (event: Event, project: Projects) => {
+  event.stopImmediatePropagation
   store.updateProject(project)
   router.push({ name: 'projects' })
 }
 
 const deleteProjectById = async (event: Event, id: string) => {
+  event.stopImmediatePropagation
   store.updateProject({} as Projects)
   await deleteProject(id)
-  emits('reloadProjects')
-  event.stopImmediatePropagation
+  await store.fetchProjects()
+  router.push({ name: 'home' })
 }
 </script>
 
 <template>
   <div class="pa-4">
-    <div class="d-flex">
-      <h2 class="mb-4">Projects</h2>
+    <div class="d-flex justify-center align-center">
+      <h2>All my tasks</h2>
       <v-spacer />
       <formsDialog
         :items="items"
         :input="dialog"
+        icon="mdi-plus"
+        size="large"
         :values="{ projectId: store.project.id }"
-        title="Create new project"
+        title="Create new task"
         @submit="updateData($event)"
         @save="saveProjects()"
         @update-input="dialog = $event"
@@ -63,10 +68,10 @@ const deleteProjectById = async (event: Event, id: string) => {
       v-for="project in props.projects"
       :key="project.id"
       class="cl-projects-items"
-      @click="goToProject(project)"
+      @click="goToProject($event, project)"
     >
       <completeStatus :projectId="project.id" size="35" :key="project.updateId" />
-      <spam class="projects-name">{{ project.name }}</spam>
+      <span class="projects-name">{{ project.name }}</span>
       <v-spacer />
       <v-btn icon flat size="small" variant="text" @click="deleteProjectById($event, project.id)">
         <v-icon>mdi-delete-variant</v-icon>

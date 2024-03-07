@@ -1,13 +1,22 @@
 import type { FormItem } from '@/types/globalTypes'
+import { priorityOptions } from '@/components/tasks/const/form'
 
 export const items: FormItem[] = [
   {
     type: 'textField',
     name: 'name',
-    label: 'Name',
+    label: 'Title',
     variant: 'text',
-    placeholder: 'Name'
+    placeholder: 'Title'
   },
+  {
+    type: 'textField',
+    name: 'subTitle',
+    label: 'Subtitle',
+    variant: 'text',
+    placeholder: 'Subtitle'
+  },
+
   {
     type: 'textField',
     name: 'startDate',
@@ -23,6 +32,14 @@ export const items: FormItem[] = [
     placeholder: 'End date'
   },
   {
+    type: 'select',
+    name: 'priority',
+    label: 'Task(Project) priority',
+    variant: 'select',
+    placeholder: 'Task(Project) priority',
+    options: priorityOptions
+  },
+  {
     type: 'textArea',
     name: 'description',
     label: 'Description',
@@ -30,10 +47,10 @@ export const items: FormItem[] = [
     placeholder: 'Description'
   },
   {
-    type: 'checkbox',
-    name: 'status',
-    label: 'Status',
+    type: 'textField',
+    name: 'id',
+    label: 'id',
     variant: 'text',
-    placeholder: 'Status'
+    placeholder: 'id'
   }
 ]

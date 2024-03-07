@@ -1,10 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import { formatDateToLocal, sliceText } from '@/libs/helpers'
-import type { Tasks } from '@/types/globalTypes'
-import { computed, type PropType } from 'vue'
-import { deleteTask } from '@/services/apiTasks'
+import formsDialog from '@/components/globals/FormsDialog.vue'
+import { items } from '@/components/tasks/const/form'
+import { formatDateToLocal } from '@/libs/helpers'
+import { deleteTask, updateTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
+import type { FormItem, Tasks } from '@/types/globalTypes'
+import { computed, onMounted, ref, type PropType } from 'vue'
 
 const props = defineProps({
   task: {
@@ -14,6 +16,14 @@ const props = defineProps({
 })
 const emits = defineEmits(['updateTask'])
 const store = useProjectsStore()
+const formItems = ref<Array<FormItem>>([])
+const dialog = ref(false)
+
+onMounted(async () => {
+  const data = await items()
+  formItems.value = data
+})
+
 const status = () => {
   emits('updateTask', { ...props.task, status: !props.task.status })
   store.updateProjectId(props.task.projectId)
@@ -38,6 +48,13 @@ const deleteTaskByID = async (event: Event, id: string) => {
   await deleteTask(id)
   status()
 }
+
+const saveTask = async (data: Tasks) => {
+  await updateTask({ ...data, id: props.task.id })
+  emits('updateTask', data)
+  store.updateProjectId(props.task.projectId)
+  dialog.value = false
+}
 </script>
 
 <template>
@@ -46,17 +63,42 @@ const deleteTaskByID = async (event: Event, id: string) => {
       <v-icon :color="completeStatus.color">{{ completeStatus.icon }}</v-icon>
     </div>
     <div class="task-info">
-      <div class="d-flex justify-center align-center">
-        <span class="name">{{ props.task.name }}</span>
+      <div class="d-flex justify-center align-center positioner-to-right">
         <v-spacer />
-        <span class="date">{{ formatDateToLocal(props.task.date) }}</span>
-        <v-btn icon flat size="small" variant="text" @click="deleteTaskByID($event, props.task.id)">
+        <div class="d-flex flex-column justify-end align-end mr-1">
+          <span class="date">{{ formatDateToLocal(props.task.date) }}</span>
+          <span class="date">Priority: {{ props.task.priority|| 'None' }}</span>
+        </div>
+        <formsDialog
+          class="mr-1"
+          :items="formItems"
+          title="Edit sub-task"
+          :input="dialog"
+          :values="{
+            ...props.task
+          }"
+          icon="mdi-pencil"
+          size="small"
+          @save="saveTask($event)"
+          @update-input="dialog = $event"
+        />
+        <v-btn
+          icon
+          flat
+          size="small"
+          variant="text"
+          @click="deleteTaskByID($event, props.task.id)"
+          class="mr-1"
+        >
           <v-icon>mdi-delete-variant</v-icon></v-btn
         >
       </div>
-      <span class="description">
-        {{ sliceText(props.task.description, 0, 150) }}
-      </span>
+      <div>
+        <span class="name">{{ props.task.name }}</span>
+        <h5 class="description">
+          {{ props.task.subTitle }}
+        </h5>
+      </div>
     </div>
   </div>
 </template>
@@ -77,6 +119,7 @@ const deleteTaskByID = async (event: Event, id: string) => {
   }
   .task-info {
     width: 100%;
+    position: relative;
     .name {
       font-size: 16px;
       font-weight: bold;
@@ -104,5 +147,10 @@ const deleteTaskByID = async (event: Event, id: string) => {
       text-decoration: line-through;
     }
   }
+}
+.positioner-to-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 </style>

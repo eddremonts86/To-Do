@@ -1,6 +1,21 @@
 import { getProjects } from '@/services/apiProjects'
 import type { FormItem, Projects } from '@/types/globalTypes'
 
+export const priorityOptions = [
+  {
+    value: 'Low',
+    label: 'Low'
+  },
+  {
+    value: 'Medium',
+    label: 'Medium'
+  },
+  {
+    value: 'High',
+    label: 'High'
+  }
+]
+
 export const items = async (): Promise<FormItem[]> => {
   const projects: Projects[] = await getProjects()
   const options = projects.map((project: Projects) => {
@@ -9,21 +24,37 @@ export const items = async (): Promise<FormItem[]> => {
       label: project.name
     }
   })
+
   return [
     {
       type: 'textField',
       name: 'name',
-      label: 'Name',
+      label: 'Title',
       variant: 'text',
-      placeholder: 'Name'
+      placeholder: 'Title'
+    },
+    {
+      type: 'textField',
+      name: 'subTitle',
+      label: 'Subtitle',
+      variant: 'text',
+      placeholder: 'Subtitle'
     },
     {
       type: 'select',
       name: 'projectId',
-      label: 'Project',
+      label: 'Tasks(Project)',
       variant: 'select',
-      placeholder: 'Project',
+      placeholder: 'Tasks(Project)',
       options
+    },
+    {
+      type: 'select',
+      name: 'priority',
+      label: 'Priority',
+      variant: 'select',
+      placeholder: 'Task priority',
+      options: priorityOptions
     },
     {
       type: 'textArea',
@@ -40,11 +71,11 @@ export const items = async (): Promise<FormItem[]> => {
       placeholder: 'Date'
     },
     {
-      type: 'checkbox',
-      name: 'status',
-      label: 'Status',
+      type: 'textField',
+      name: 'id',
+      label: 'id',
       variant: 'text',
-      placeholder: 'Status'
+      placeholder: 'id'
     }
   ]
 }

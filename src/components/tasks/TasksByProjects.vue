@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import formsDialog from '@/components/globals/FormsDialog.vue'
 import projectsTasks from '@/components/projects/Details.vue'
+import { items as itemsProjects } from '@/components/projects/const/form'
 import { items } from '@/components/tasks/const/form'
 import { sliceText, uniqueId } from '@/libs/helpers'
-import { deleteProject } from '@/services/apiProjects'
+import { deleteProject, updateProject } from '@/services/apiProjects'
 import { createTask } from '@/services/apiTasks'
 import { useProjectsStore } from '@/stores/projects'
 import type { FormItem, Projects, Tasks } from '@/types/globalTypes'
@@ -14,6 +15,7 @@ import { formatDateToLocal } from '@/libs/helpers'
 const router = useRouter()
 const store = useProjectsStore()
 const dialog = ref(false)
+const dialogProject = ref(false)
 const formItems = ref<Array<FormItem>>([])
 const updateId = ref(uniqueId('task_'))
 onMounted(async () => {
@@ -22,11 +24,12 @@ onMounted(async () => {
 })
 
 const projects = computed((): Projects[] => {
-  const project = store.project
-  if (!project?.id) {
-    return store.projects
+  if (projectRouter.value) {
+    if (store.project.id) {
+      return [store.project]
+    }
   }
-  return [project]
+  return store.projects
 })
 
 const projectRouter = computed(() => {
@@ -48,50 +51,73 @@ const deleteProjectById = async (id: string) => {
   await store.fetchProjects()
   router.push({ name: 'home' })
 }
+
+const updateProjects = async (data: Projects) => {
+  await updateProject(data)
+  await store.fetchProjects()
+  dialogProject.value = false
+  router.push({ name: 'projects' })
+}
 </script>
 <template>
-  <div v-if="projects.length">
+  <div v-if="projects.length" :key="projects.length">
     <v-card class="mb-4" rounded="lg" elevation="0" v-for="project in projects" :key="project.id">
       <v-card-title class="d-flex justify-center align-center">
         <h3 class="projects-name">{{ project.name }}</h3>
         <v-spacer />
         <formsDialog
-          :items="formItems"
-          title="Create new task"
-          :input="dialog"
+          :key="project.id"
+          :items="itemsProjects"
+          title="Edit Task(project)"
+          :input="dialogProject"
+          icon="mdi-pencil"
+          size="small"
           :values="{
-            projectId: project.id
+            ...project
           }"
-          @save="saveTask($event)"
-          @update-input="dialog = $event"
+          @save="updateProjects($event)"
+          @update-input="dialogProject = $event"
         />
-        <v-btn
-          icon
-          flat
-          size="md"
-          variant="text"
-          @click="deleteProjectById(project.id)"
-          class="ml-4"
-        >
+        <v-btn icon flat size="small" variant="text" @click="deleteProjectById(project.id)">
           <v-icon>mdi-delete-variant</v-icon>
         </v-btn>
       </v-card-title>
       <v-divider />
       <v-card-subtitle class="pa-4">
-        <span class="text-bold"
-          >{{ formatDateToLocal(project.startDate) }} -
-          {{ formatDateToLocal(project.endDate) }}</span
-        >
+        <p class="text-bold">
+          From: <b>{{ formatDateToLocal(project.startDate) }}</b> - To:
+          <b>{{ formatDateToLocal(project.endDate) }}</b>
+        </p>
+        <h4 class="text-bold mt-3 mb-1">{{ project.subTitle }}</h4>
         <p class="text-wrap">
-          {{ sliceText(project.description, 0, 150) }}
+          {{ !projectRouter ? sliceText(project.description, 0, 50) : project.description }}
         </p>
       </v-card-subtitle>
       <v-divider />
       <v-card-text class="pa-4">
+        <v-row>
+          <v-col cols="12" class="d-flex justify-center align-center mt-0 pt-0">
+            <h2>Sub-Tasks</h2>
+            <v-spacer />
+            <formsDialog
+              :key="project.id + '_task_'"
+              :items="formItems"
+              title="Create new sub-task"
+              :input="dialog"
+              :icon="null"
+              size="large"
+              :values="{
+                projectId: project.id
+              }"
+              @save="saveTask($event)"
+              @update-input="dialog = $event"
+            />
+          </v-col>
+        </v-row>
         <projectsTasks :projectId="project.id" :key="updateId" />
       </v-card-text>
       <v-card-actions class="d-flex justify-center align-center" v-if="!projectRouter">
-        <v-btn @click="goToProject(project)">Go to project</v-btn>
+        <v-btn @click="goToProject(project)">See all</v-btn>
       </v-card-actions>
     </v-card>
   </div>

@@ -3,6 +3,8 @@ type BaseAction = {
   name: string
   description: string
   status: Boolean
+  subTitle?: string
+  priority?: string
 }
 
 export type Projects = BaseAction & {

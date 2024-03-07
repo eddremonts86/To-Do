@@ -7,6 +7,8 @@ const props = defineProps<{
   input: boolean
   title: String
   values: Object
+  icon: string | null
+  size: string | null
 }>()
 
 const emit = defineEmits(['submit', 'update-input', 'save'])
@@ -33,8 +35,8 @@ const save = () => {
 <template>
   <v-dialog max-width="500" v-model="dialog">
     <template v-slot:activator="{ props: activatorProps }">
-      <v-btn icon flat v-bind="activatorProps">
-        <v-icon>mdi-plus</v-icon>
+      <v-btn icon flat variant="text" v-bind="activatorProps" :size="props.size || 'large'">
+        <v-icon>{{ icon ? icon : 'mdi-plus' }}</v-icon>
       </v-btn>
     </template>
 

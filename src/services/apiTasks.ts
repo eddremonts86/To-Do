@@ -1,5 +1,6 @@
 import { formatDate } from '@/libs/helpers'
 import { axios } from '@/services/axios'
+import type { Tasks } from '@/types/globalTypes'
 export const getTasks = async () => {
   try {
     const { data } = await axios.get('/tasks')
@@ -18,10 +19,10 @@ export const getTask = async (id: string) => {
   }
 }
 
-export const createTask = async (task: any) => {
+export const createTask = async (task: Tasks) => {
   try {
-    const taskFormatted = { ...task, date: formatDate(task.date) }
-    console.log('🚀 ~ createTask ~ taskFormatted:', taskFormatted)
+    const { id, ...result } = task
+    const taskFormatted = { ...result, date: formatDate(task.date) }
     const { data } = await axios.post('/tasks', taskFormatted)
     return data
   } catch (error) {
@@ -29,7 +30,7 @@ export const createTask = async (task: any) => {
   }
 }
 
-export const updateTask = async (task: any) => {
+export const updateTask = async (task: Tasks) => {
   try {
     const taskFormatted = { ...task, date: formatDate(task.date) }
     const { data } = await axios.put(`/tasks/${task.id}`, taskFormatted)
@@ -71,7 +72,9 @@ export const getTasksByProject = async (projectId: string) => {
 
 export const getTaskByDate = async (date: string) => {
   try {
-    const { data } = await axios.get(`/tasks?date=${date}`)
+    const [day, month, year] = date.split('/')
+    const dateFormatted = `${year}-${+day <= 9 ? `0${day}` : day}-${+month <= 9 ? `0${month}` : month}`
+    const { data } = await axios.get(`/tasks?date=${dateFormatted}`)
     return data
   } catch (error) {
     console.log(error)

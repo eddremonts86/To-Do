@@ -13,7 +13,6 @@
 <script lang="ts" setup>
 import { useProjectsStore } from '@/stores/projects'
 import type { Projects } from '@/types/globalTypes'
-import { withDefaults } from 'vue'
 import { useRouter } from 'vue-router'
 const store = useProjectsStore()
 const router = useRouter()
@@ -23,12 +22,7 @@ interface Props {
   email: string
   img: string
 }
-
-const props = withDefaults(defineProps<Props>(), {
-  name: 'Eduardo Inerarte',
-  email: 'eduardo.inerarte@gmail.com',
-  img: 'https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png'
-})
+const props = defineProps<Props>()
 
 const goToHome = () => {
   store.updateProject({} as Projects)
