@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import formsDialog from '@/components/globals/FormsDialog.vue'
+import formsDialog from '@/components/globals/Forms/FormsDialog.vue'
 import Task from '@/components/tasks/Task.vue'
 import { items } from '@/components/tasks/const/form'
 import { formatDate } from '@/libs/helpers'

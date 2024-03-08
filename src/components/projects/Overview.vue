@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
-import formsDialog from '@/components/globals/FormsDialog.vue'
+import formsDialog from '@/components/globals/Forms/FormsDialog.vue'
 import { items } from '@/components/projects/const/form'
 import { createProject, deleteProject } from '@/services/apiProjects'
 import { useProjectsStore } from '@/stores/projects'

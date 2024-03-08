@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import formsDialog from '@/components/globals/FormsDialog.vue'
+import formsDialog from '@/components/globals/Forms/FormsDialog.vue'
 import projectsTasks from '@/components/projects/Details.vue'
 import { items as itemsProjects } from '@/components/projects/const/form'
 import { items } from '@/components/tasks/const/form'

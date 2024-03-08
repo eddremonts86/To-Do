@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import htmlEditor from '@/components/globals/HtmlEditor.vue'
+import htmlEditor from '@/components/globals/Editor/HtmlEditor.vue'
 import { formatDateToOther } from '@/libs/helpers'
 import type { FormItem } from '@/types/globalTypes'
 import type { PropType } from 'vue'
@@ -74,6 +74,7 @@ watch(dataSubmit, () => {
           :hide-details="true"
           density="compact"
         />
+
         <v-checkbox
           v-if="item.type === 'checkbox'"
           v-model="dataSubmit[item.name]"
@@ -85,7 +86,7 @@ watch(dataSubmit, () => {
           :hide-details="true"
           density="compact"
           color="primary"
-        ></v-checkbox>
+        />
 
         <v-select
           v-if="item.type === 'select' || multiple(item.type)"
@@ -104,17 +105,37 @@ watch(dataSubmit, () => {
           density="compact"
         />
 
-        <span v-if="item.type === 'htmlEditor'" v-text="item.placeholder"></span>
-        <htmlEditor
-          v-if="item.type === 'htmlEditor'"
-          :value="dataSubmit[item.name]"
-          @input="
-            (value: string) => {
-              dataSubmit[item.name] = value
-            }
-          "
-          class="htmlEditor"
+        <v-autocomplete
+          v-if="item.type === 'autocomplete' || multiple(item.type)"
+          v-model="dataSubmit[item.name]"
+          variant="outlined"
+          :label="item.label"
+          :placeholder="item.placeholder"
+          :required="item.required"
+          :disabled="item.disabled"
+          :items="item.options"
+          :return-object="multiple(item.type)"
+          :multiple="multiple(item.type)"
+          item-title="label"
+          item-value="value"
+          :hide-details="true"
+          density="compact"
+          append-icon="mdi-magnify"
+          persistent-hint
         />
+
+        <div v-if="item.type === 'htmlEditor'">
+          <span v-text="item.placeholder"></span>
+          <htmlEditor
+            :value="dataSubmit[item.name]"
+            class="htmlEditor"
+            @input="
+              (value: string) => {
+                dataSubmit[item.name] = value
+              }
+            "
+          />
+        </div>
       </v-col>
     </v-row>
   </form>

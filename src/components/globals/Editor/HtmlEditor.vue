@@ -203,7 +203,6 @@ export default defineComponent({
 })
 </script>
 
-<!-- Needed to get styling up to Resights standard -->
 <style lang="scss" scoped>
 ::deep .v-text-field__slot {
   padding-bottom: 54px !important;

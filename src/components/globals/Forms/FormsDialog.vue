@@ -1,7 +1,11 @@
 <script lang="ts" setup>
-import AppForms from '@/components/globals/AppForms.vue'
+import AppForms from '@/components/globals/Forms/AppForms.vue'
 import type { FormItem, IDictionary } from '@/types/globalTypes'
+import { isValidForm } from '@/components/globals/Forms/FormValidation'
 import { computed, reactive, ref } from 'vue'
+
+const validForm = ref(false)
+let data = reactive<IDictionary>({})
 const props = defineProps<{
   items: FormItem[]
   input: boolean
@@ -12,8 +16,6 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['submit', 'update-input', 'save'])
-let data = reactive<IDictionary>({})
-const validForm = ref(false)
 
 const dialog = computed({
   get: () => props.input || false,
@@ -22,28 +24,10 @@ const dialog = computed({
   }
 })
 
-const requiredItems = (dataValues: IDictionary) => {
-  if (!Object.keys(dataValues).length) return false
-  const requiredItems = props.items.reduce((acc, item: FormItem) => {
-    if (item.required) {
-      //@ts-ignore
-      acc.push(item.name)
-    }
-    return acc
-  }, [])
-
-  validForm.value = requiredItems.every((name: keyof IDictionary) => {
-    if (dataValues[name as string].length >= 3) {
-      return true
-    }
-    return false
-  })
-}
-
-const submit = (dataSubmit: any) => {
-  requiredItems(dataSubmit)
-  data = dataSubmit
-  emit('submit', dataSubmit)
+const submit = (values: any) => {
+  validForm.value = isValidForm(values, props.items)
+  emit('submit', values)
+  data = values
 }
 
 const save = () => {

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import userInfo from '@/components/globals/UserInfo.vue'
+import userInfo from '@/components/user/UserInfo.vue'
 import projectsOverview from '@/components/projects/Overview.vue'
 import { formatDate } from '@/libs/helpers'
 import { useProjectsStore } from '@/stores/projects'
